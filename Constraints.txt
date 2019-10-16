@@ -1,0 +1,34 @@
+<Constraints>
+The crowdfunding system JumpStarters was created with the objective of allowing aspiring creators to get funding for their projects.  
+
+* Every user must be at least one of the following: A creator or a funder. {Covering constraint} 
+* Every user can be more than one of the following: A creator or a funder. {Overlapping constraint} 
+* Users are identified by their username. The name, password, email and country of the user must be recorded. 
+* An account can comment on a project more than once. 
+* An account is from exactly one country 
+* Every funder can only submit a pledge to a particular project once. 
+* Every country can be associated to any number of user accounts 
+* Projects are identified by its project_id. 
+* Project_type, project_name, project_description, project_location, funding_requirement, project_status_id and project_media must be recorded. 
+* Every project must have only one project type. 
+* Every project must be created by only one creator. 
+* Every project can be funded by many funders. 
+* Every project can contain many comments. 
+* Every project records at least one set of parameters  
+* Every project has zero or more shipping information. 
+* Every project contains at least one media source but may have more than one. 
+* Every project must have at most one parameter. 
+* Creators can change the parameters of the project such as the end date and the funding requirement. Each parameter change is tracked. 
+* Every comment must associate with exactly one project 
+* Each comment is identified by a project and a user account 
+* If a project is deleted, you need not keep track of its comments any longer. 
+* Shipping information are identified by their project_id and country  
+* Each project can ship to multiple countries 
+* Estimated shipping date should be after project end date 
+* <non trivial constraints> The Creator cannot remove a shipping destination if there are funders which pledged to the project from that country 
+* Funders make pledges for projects. A funder can make at most one pledge for a project. 
+* A project can receive pledges from several funders. 
+* Each pledge has amount and a date and time associated with it. 
+* A pledge must be entered before the project deadline to be valid. 
+* <non trivial constraints> Creater of the project cannot pledge on his own project 
+* <non trivial constraints> Funder cannot pledge on a project which ships a product but does not ship it to the country the funder is residing in. 
