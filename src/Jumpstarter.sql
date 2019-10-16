@@ -1,3 +1,4 @@
+DROP TABLE IF EXISTS Country CASCADE;
 DROP TABLE IF EXISTS UserAccount CASCADE;
 DROP TABLE IF EXISTS Creator CASCADE;
 DROP TABLE IF EXISTS Funder CASCADE;
@@ -9,7 +10,7 @@ DROP TABLE IF EXISTS Shipping_info CASCADE;
 DROP TABLE IF EXISTS Pledges CASCADE;
 DROP TABLE IF EXISTS Creates CASCADE;
 DROP TABLE IF EXISTS Follows CASCADE;
-DROP TABLE IF EXISTS Country CASCADE;
+DROP TABLE IF EXISTS Rates CASCADE;
 
 CREATE TABLE Country(
 	country_name varchar(100) PRIMARY KEY
@@ -36,24 +37,21 @@ CREATE TABLE Funder (
 CREATE TABLE Projects(
 	id int PRIMARY KEY,
 	project_name text NOT NULL,
-	project_status varchar(10) NOT NULL,
 	project_description  text NOT NULL,
 	project_location varchar(100) NOT NULL REFERENCES Country (country_name),
 	start_date timestamp NOT NULL,
-	end_date timestamp NOT NULL,
-	project_media int NOT NULL,
-	num_of_views int,
-	funding_requirement numeric NOT NULL
+	num_of_views int
 );
 
 /*
 we need to be careful when inserting the first row of parameters for the project
 */
 CREATE TABLE Parameters(
-	project_id int PRIMARY KEY REFERENCES Projects (id) ON DELETE CASCADE,
+	project_id int REFERENCES Projects (id) ON DELETE CASCADE,
 	end_date timestamp NOT NULL,
 	goal numeric NOT NULL,
-	time_stamp timestamp NOT NULL
+	time_stamp timestamp NOT NULL,
+	PRIMARY KEY (project_id, time_stamp)
 );
 
 /*
@@ -72,10 +70,11 @@ CREATE TABLE Comments(
 is this also an weak entity set?
 */
 CREATE TABLE Media(
-	project_id int PRIMARY KEY REFERENCES Projects (id),
+	project_id int REFERENCES Projects (id) ON DELETE CASCADE,
 	media_type varchar(100) NOT NULL,
 	description text NOT NULL,
-	link varchar(100) NOT NULL
+	link varchar(100) NOT NULL,
+	PRIMARY KEY (project_id, link)
 );
 
 CREATE TABLE Shipping_info(
@@ -86,7 +85,9 @@ CREATE TABLE Shipping_info(
 );
 
 /*
-add triggers to check funders are not creators of the project
+Constriant: userAccount only can pledge on a particular project once
+
+TODO: add triggers to check funders are not creators of the project
 add triggers to ensure that the funder not from a country which the 
 projects ship to can add a pledge
 */
@@ -109,6 +110,13 @@ CREATE TABLE Follows(
 	projects_followed int REFERENCES Projects (id), 
 	funder varchar(100) REFERENCES Funder (user_name),
 	PRIMARY KEY (projects_followed, funder)
+);
+
+CREATE TABLE Rates(
+	user_name varchar(100) REFERENCES Funder,
+	project_id int REFERENCES Projects (id),
+	rating int NOT NULL,
+	PRIMARY KEY (user_name, project_id)
 );
 
 
