@@ -12,6 +12,7 @@ DROP TABLE IF EXISTS Creates CASCADE;
 DROP TABLE IF EXISTS Follows CASCADE;
 DROP TABLE IF EXISTS Rates CASCADE;
 DROP TABLE IF EXISTS Tags CASCADE;
+DROP TABLE IF EXISTS Currency CASCADE;
 DROP TABLE IF EXISTS CurrencyPair CASCADE;
 
 CREATE TABLE Country(
@@ -29,7 +30,8 @@ CREATE TABLE UserAccount (
 );
 
 CREATE TABLE Creator (
-	user_name varchar(100) PRIMARY KEY REFERENCES UserAccount (user_name) ON DELETE CASCADE
+	user_name varchar(100) PRIMARY KEY REFERENCES UserAccount (user_name) ON DELETE CASCADE,
+	organization varchar(100)
 );
 
 CREATE TABLE Funder (
