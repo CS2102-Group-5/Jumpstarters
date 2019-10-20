@@ -24,9 +24,10 @@ CREATE TABLE UserAccount (
   name      varchar(50) NOT NULL,
   email		varchar(100) NOT NULL UNIQUE,
   country_name	varchar(100) REFERENCES Country,
+  password		varchar(50) NOT NULL,
   date_created	timestamp,
   last_login	timestamp,
-  password		varchar(50)
+  CHECK (email LIKE '%_@__%.__%' AND email ~* '^[A-Za-z0-9._%-]+@[A-Za-z0-9.-]+[.][A-Za-z]+$')
 );
 
 CREATE TABLE Creator (
@@ -36,7 +37,7 @@ CREATE TABLE Creator (
 
 CREATE TABLE Funder (
 	user_name varchar(100) PRIMARY KEY REFERENCES UserAccount (user_name) ON DELETE CASCADE,
-	project_type varchar(100) ARRAY
+	preferences varchar(100) ARRAY
 );
 
 CREATE TABLE Projects(
