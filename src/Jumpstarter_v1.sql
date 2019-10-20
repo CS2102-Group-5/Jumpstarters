@@ -15,8 +15,12 @@ DROP TABLE IF EXISTS Tags CASCADE;
 DROP TABLE IF EXISTS Currency CASCADE;
 DROP TABLE IF EXISTS CurrencyPair CASCADE;
 
+DROP TRIGGER IF EXISTS currency_trig CASCADE;
+DROP FUNCTION IF EXISTS currency_check CASCADE;
+
 CREATE TABLE Country(
-	country_name varchar(100) PRIMARY KEY
+	country_name varchar(100) PRIMARY KEY,
+	currency_name varchar(10)
 );
 
 CREATE TABLE UserAccount (
@@ -127,17 +131,30 @@ CREATE TABLE Tags(
 	PRIMARY KEY (user_name,project_id, tag_name)
 );
 
-CREATE TABLE Currency(
-	currency_name varchar(10) PRIMARY KEY,
-	country_name varchar(100) REFERENCES Country (country_name)
-);
 
 CREATE TABLE CurrencyPair(
-	base_currency varchar(10) REFERENCES Currency (currency_name),
-	quote_currency varchar(10) REFERENCES Currency (currency_name),
+	base_currency varchar(10) NOT NULL,
+	quote_currency varchar(10) NOT NULL,
 	exchange_rate numeric NOT NULL,
 	PRIMARY KEY (base_currency, quote_currency)
 );
+
+CREATE OR REPLACE FUNCTION currency_check()
+RETURNS TRIGGER AS $$ 
+DECLARE is_supported NUMERIC;
+BEGIN
+SELECT COUNT(*) INTO is_supported FROM Country c1, Country c2 WHERE NEW.base_currency = c1.currency_name AND NEW.quote_currency = c2.currency_name;
+IF is_supported = 1 THEN
+	RETURN NEW;
+ELSE
+	RETURN NULL;
+END IF;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER currency_trig
+BEFORE INSERT OR UPDATE ON CurrencyPair
+FOR EACH ROW EXECUTE PROCEDURE currency_check();
 
 
 
