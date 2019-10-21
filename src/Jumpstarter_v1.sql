@@ -153,11 +153,18 @@ END IF;
 END;
 $$ LANGUAGE plpgsql;
 
+/*
+If the project does not have any shipping infomation, trivially return true
+If the project does not ship to the country the funder resides in, return false
+Else return true
+*/
 CREATE OR REPLACE FUNCTION shipping_check()
 RETURNS TRIGGER AS $$
 DECLARE ships_to NUMERIC;
 BEGIN
-SELECT COUNT(*) INTO ships_to FROM (SELECT c.country_name FROM Country c INNER JOIN UserAccount u ON u.country_name = c.country_name INNER JOIN Funder f ON f.user_name = u.user_name WHERE f.user_name = NEW.user_name) AS c1, (SELECT country_name FROM Shipping_info WHERE project_id = NEW.project_id) AS c2 WHERE c1.country_name = c2.country_name;
+SELECT CASE WHEN ((SELECT COUNT(*) FROM Shipping_info WHERE project_id = NEW.project_id) = 0) THEN 1 
+		ELSE COUNT(*)
+		END INTO ships_to FROM (SELECT c.country_name FROM Country c INNER JOIN UserAccount u ON u.country_name = c.country_name INNER JOIN Funder f ON f.user_name = u.user_name WHERE f.user_name = NEW.user_name) AS c1, (SELECT country_name FROM Shipping_info WHERE project_id = NEW.project_id) AS c2 WHERE c1.country_name = c2.country_name;
 IF ships_to = 1 THEN
 	RETURN NEW;
 ELSE
