@@ -143,10 +143,25 @@ CREATE OR REPLACE FUNCTION currency_check()
 RETURNS TRIGGER AS $$ 
 DECLARE is_supported NUMERIC;
 BEGIN
-SELECT COUNT(*) INTO is_supported FROM Country c1, Country c2 WHERE NEW.base_currency = c1.currency_name AND NEW.quote_currency = c2.currency_name;
-IF is_supported = 1 THEN
+SELECT COUNT(*) INTO is_supported FROM Country c1, Country c2 WHERE c1.currency_name = NEW.base_currency AND c2.currency_name = NEW.quote_currency;
+IF is_supported >= 1 THEN
 	RETURN NEW;
 ELSE
+	RAISE NOTICE 'Currency not supported'; 
+	RETURN NULL;
+END IF;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE OR REPLACE FUNCTION shipping_check()
+RETURNS TRIGGER AS $$
+DECLARE ships_to NUMERIC;
+BEGIN
+SELECT COUNT(*) INTO ships_to FROM (SELECT c.country_name FROM Country c INNER JOIN UserAccount u ON u.country_name = c.country_name INNER JOIN Funder f ON f.user_name = u.user_name WHERE f.user_name = NEW.user_name) AS c1, (SELECT country_name FROM Shipping_info WHERE project_id = NEW.project_id) AS c2 WHERE c1.country_name = c2.country_name;
+IF ships_to = 1 THEN
+	RETURN NEW;
+ELSE
+	RAISE NOTICE 'Project does not ship to country';
 	RETURN NULL;
 END IF;
 END;
@@ -155,6 +170,10 @@ $$ LANGUAGE plpgsql;
 CREATE TRIGGER currency_trig
 BEFORE INSERT OR UPDATE ON CurrencyPair
 FOR EACH ROW EXECUTE PROCEDURE currency_check();
+
+CREATE TRIGGER pledge_insert
+BEFORE INSERT ON Pledges
+FOR EACH ROW EXECUTE PROCEDURE shipping_check();
 
 
 
