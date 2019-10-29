@@ -48,7 +48,8 @@ CREATE TABLE Projects(
 	id int PRIMARY KEY,
 	user_name varchar(100) REFERENCES Creator,
 	project_name text NOT NULL,
-	project_description  text NOT NULL,
+	project_type  varchar(50) NOT NULL,
+	project_description text NOT NULL,
 	project_location varchar(100) NOT NULL REFERENCES Country (country_name),
 	start_date timestamp NOT NULL,
 	num_of_views int
@@ -63,6 +64,7 @@ CREATE TABLE History(
 	end_date timestamp NOT NULL,
 	goal numeric NOT NULL,
 	time_stamp timestamp NOT NULL,
+	CHECK(end_date > time_stamp),
 	PRIMARY KEY (project_id, time_stamp)
 );
 
@@ -85,7 +87,7 @@ CREATE TABLE Media(
 	project_id int REFERENCES Projects (id) ON DELETE CASCADE,
 	media_type varchar(100) NOT NULL,
 	description text NOT NULL,
-	link varchar(100) NOT NULL,
+	link text NOT NULL,
 	PRIMARY KEY (project_id, link)
 );
 
@@ -174,6 +176,38 @@ END IF;
 END;
 $$ LANGUAGE plpgsql;
 
+CREATE OR REPLACE FUNCTION funder_check()
+RETURNS TRIGGER AS $$
+DECLARE is_Creator boolean;
+BEGIN
+IF (SELECT COUNT(*) FROM 
+	Projects prj WHERE new.project_id = prj.id AND NEW.user_name = prj.user_name) >= 1
+	THEN is_Creator = true;
+ELSE is_Creator = false;
+END IF;
+
+IF is_Creator = true THEN
+	RAISE NOTICE 'Creator cannot pledge to their own project';
+	RETURN NULL;
+ELSE
+	RETURN NEW;
+END IF;	
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE OR REPLACE FUNCTION date_check()
+RETURNS TRIGGER AS $$
+DECLARE is_after boolean;
+BEGIN SELECT true INTO is_after FROM History h WHERE h.project_id = NEW.project_id AND NEW.time_stamp > h.end_date AND h.time_stamp = (SELECT MAX(h1.time_stamp) FROM History h1 WHERE h1.project_id = h.project_id);
+IF is_after = true THEN
+	RAISE NOTICE 'Pledge is after the project''s end date';
+	RETURN NULL;
+ELSE RETURN NEW;
+END IF;
+END;
+$$ LANGUAGE plpgsql;
+
+
 CREATE TRIGGER currency_trig
 BEFORE INSERT OR UPDATE ON CurrencyPair
 FOR EACH ROW EXECUTE PROCEDURE currency_check();
@@ -182,5 +216,12 @@ CREATE TRIGGER pledge_insert
 BEFORE INSERT ON Pledges
 FOR EACH ROW EXECUTE PROCEDURE shipping_check();
 
+CREATE TRIGGER pledge_funder_check
+BEFORE INSERT ON Pledges
+FOR EACH ROW EXECUTE PROCEDURE funder_check();
+
+CREATE TRIGGER pledge_date_check
+BEFORE INSERT OR UPDATE ON Pledges
+FOR EACH ROW EXECUTE PROCEDURE date_check();
 
 

@@ -247,14 +247,14 @@ INSERT INTO Country VALUES ('Yemen','YER');
 INSERT INTO Country VALUES ('Zambia','ZMK');
 INSERT INTO Country VALUES ('Zimbabwe','ZWD');
 
-INSERT INTO UserAccount VALUES ('FounderFather', 'GeorgeWashington', 'georgeWashington@gmail.com', 'United States of America','cdahsi', '2019-01-01 00:00:01',CURRENT_TIMESTAMP);
+INSERT INTO UserAccount VALUES ('FounderFather', 'GeorgeWashington', 'georgeWashington@gmail.com', 'United States','cdahsi', '2019-01-01 00:00:01',CURRENT_TIMESTAMP);
 INSERT INTO UserAccount VALUES ('MarieAntoinette', 'MarieAntoinette', 'marieAntoinette@gmail.com', 'France', 'aswvevb', '2019-01-01 00:00:01',CURRENT_TIMESTAMP);
 INSERT INTO UserAccount VALUES ('SirStamfordRaffles', 'StamfordRaffles', 'raffles@gmail.com', 'Singapore', 'daoiend', '2019-01-01 00:00:01',CURRENT_TIMESTAMP);
 INSERT INTO UserAccount VALUES ('ONobunaga', 'Oda Nobunaga', 'odaNobunaga@gmail.com', 'Japan', 'boendoa' ,'2019-01-01 00:00:01',CURRENT_TIMESTAMP);
 INSERT INTO UserAccount VALUES ('Scientist', 'Albert Einstein', 'albertEinstein@gmail.com', 'Germany', 'mspxieg', '2019-01-01 00:00:01',CURRENT_TIMESTAMP);
 INSERT INTO UserAccount VALUES ('SirWinstonChurchhill', 'Winston Churchhill', 'winstonChurchhill@gmail.com', 'United Kingdom', 'peidna', '2019-01-01 00:00:01',CURRENT_TIMESTAMP);
-INSERT INTO UserAccount VALUES ('JohnDoe', 'John Doe', 'johndoe@gmail.com', 'United States of America', 'qpandugv', '2019-01-01 00:00:01',CURRENT_TIMESTAMP);
-INSERT INTO UserAccount VALUES ('MaryJane', 'Mary Jane', 'maryJane@gmail.com', 'United States of America', 'cveug', '2019-01-01 00:00:01',CURRENT_TIMESTAMP);
+INSERT INTO UserAccount VALUES ('JohnDoe', 'John Doe', 'johndoe@gmail.com', 'United States', 'qpandugv', '2019-01-01 00:00:01',CURRENT_TIMESTAMP);
+INSERT INTO UserAccount VALUES ('MaryJane', 'Mary Jane', 'maryJane@gmail.com', 'United States', 'cveug', '2019-01-01 00:00:01',CURRENT_TIMESTAMP);
 INSERT INTO UserAccount VALUES ('MJ', 'Mary Jane', 'mj@gmail.com', 'United Kingdom', 'bopeodns', '2019-01-01 00:00:01',CURRENT_TIMESTAMP);
 INSERT INTO UserAccount VALUES ('HenryToh', 'Henry Toh', 'henryToh@gmail.com', 'Singapore', 'flayeb', '2019-01-01 00:00:01',CURRENT_TIMESTAMP);
 INSERT INTO UserAccount VALUES ('MarissaYeo', 'Marissa Yeo', 'marissaYeo@gmail.com', 'Singapore', 'qrxbai', '2019-01-01 00:00:01',CURRENT_TIMESTAMP);
@@ -286,7 +286,7 @@ INSERT INTO Funder VALUES ('IvonnePreiss', ARRAY['Publishing']);
 INSERT INTO Funder VALUES ('HirakawaDaichi', ARRAY['Design & Tech']);
 INSERT INTO Funder VALUES ('KuroseMayu', ARRAY['Music', 'Film']);
 
-INSERT INTO Projects VALUES (0001, 'Scientist', 'Research Project X', 'Design & Tech', '' ,'Germany', '2019-01-01 00:00:01', 0);
+INSERT INTO Projects VALUES (0001, 'Scientist', 'Research Project X', 'Design & Tech', 'This project cures cancer.' ,'Germany', '2019-01-01 00:00:01', 0);
 INSERT INTO Projects VALUES (0002, 'SirWinstonChurchhill', 'Video Broadcast', 'Film', '' ,'United Kingdom', '2019-01-01 00:00:01', 0);
 INSERT INTO Projects VALUES (0003, 'SirStamfordRaffles', 'Plant Biology Book', 'Publishing','', 'Singapore', '2019-01-01 00:00:01', 0);
 INSERT INTO Projects VALUES (0004, 'Scientist', 'Research Project Y', 'Design & Tech','', 'Germany', '2019-01-01 00:00:01', 0);
@@ -295,22 +295,22 @@ INSERT INTO Projects VALUES (0006, 'ONobunaga', 'New Fireworks Product', 'Food &
 INSERT INTO Projects VALUES (0007, 'Scientist', 'Research Project Z', 'Design & Tech','', 'Germany', '2019-01-01 00:00:01', 0);
 INSERT INTO Projects VALUES (0008, 'SirStamfordRaffles', 'Animal Book', 'Publishing','', 'Singapore', '2019-01-01 00:00:01', 0);
 
-INSERT INTO History VALUES (0001, 'Ongoing', '2019-05-01 00:00:01', 1000, CURRENT_TIMESTAMP);
-INSERT INTO History VALUES (0002, 'Ongoing', '2019-05-01 00:00:01', 2000, CURRENT_TIMESTAMP);
-INSERT INTO History VALUES (0003, 'Ongoing', '2019-05-01 00:00:01', 3000, CURRENT_TIMESTAMP);
-INSERT INTO History VALUES (0004, 'Ongoing', '2019-05-01 00:00:01', 4000, CURRENT_TIMESTAMP);
-INSERT INTO History VALUES (0005, 'Ongoing', '2019-05-01 00:00:01', 5000, CURRENT_TIMESTAMP);
-INSERT INTO History VALUES (0006, 'Ongoing', '2019-05-01 00:00:01', 6000, CURRENT_TIMESTAMP);
-INSERT INTO History VALUES (0007, 'Ongoing', '2019-05-01 00:00:01', 7000, CURRENT_TIMESTAMP);
+INSERT INTO History VALUES (0001, 'Ongoing', '2020-05-01 00:00:01', 1000, CURRENT_TIMESTAMP);
+INSERT INTO History VALUES (0002, 'Ongoing', '2020-05-01 00:00:01', 2000, CURRENT_TIMESTAMP);
+INSERT INTO History VALUES (0003, 'Ongoing', '2020-05-01 00:00:01', 3000, CURRENT_TIMESTAMP);
+INSERT INTO History VALUES (0004, 'Ongoing', '2020-05-01 00:00:01', 4000, CURRENT_TIMESTAMP);
+INSERT INTO History VALUES (0005, 'Ongoing', '2020-05-01 00:00:01', 5000, CURRENT_TIMESTAMP);
+INSERT INTO History VALUES (0006, 'Ongoing', '2020-05-01 00:00:01', 6000, CURRENT_TIMESTAMP);
+INSERT INTO History VALUES (0007, 'Ongoing', '2020-05-01 00:00:01', 7000, CURRENT_TIMESTAMP);
 /** Closed means the creator decided to shut down the project prematurely
 INSERT INTO History VALUES (0003, 'Closed', '2019-05-01 00:00:01', 3000, CURRENT_TIMESTAMP);
 */
 /*
 test for extended enddate
 */
-INSERT INTO History VALUES (0003, 'Ongoing', '2019-10-01 00:00:01', 3000, CURRENT_TIMESTAMP);
-INSERT INTO History VALUES (0004, 'Ongoing', '2019-10-01 00:00:01', 3000, CURRENT_TIMESTAMP);
-INSERT INTO History VALUES (0003, 'Ongoing', '2019-10-01 00:00:01', 1000, CURRENT_TIMESTAMP);
+INSERT INTO History VALUES (0003, 'Ongoing', '2020-10-01 00:00:01', 3000, CURRENT_TIMESTAMP);
+INSERT INTO History VALUES (0004, 'Ongoing', '2020-10-01 00:00:01', 3000, CURRENT_TIMESTAMP);
+INSERT INTO History VALUES (0003, 'Ongoing', '2020-10-01 00:00:01', 1000, CURRENT_TIMESTAMP);
 
 
 INSERT INTO Comments VALUES (0001, 'HirakawaDaichi', 'xxx', '2019-03-01 00:00:01');
@@ -324,10 +324,12 @@ INSERT INTO Comments VALUES (0006, 'IvonnePreiss', 'xxx', '2019-03-01 00:00:01')
 INSERT INTO Comments VALUES (0007, 'HenryToh', 'xxx', '2019-03-01 00:00:01');
 INSERT INTO Comments VALUES (0001, 'HirakawaDaichi', 'zzz', '2019-03-03 00:00:01');
 
-INSERT INTO Media VALUES (0001, 'ma', 'da', 'linka');
+/*INSERT INTO Media VALUES (0001, 'ma', 'da', 'linka');*/
+INSERT INTO Media VALUES (0001, 'video', 'main', 'https://www.youtube.com/embed/L3h828EtWoA');
+INSERT INTO Media VALUES (0001, 'image', 'about', 'https://systweak1.vo.llnwd.net/content/wp/systweakblogsnew/uploads_new/2018/09/Twitter.png');
 INSERT INTO Media VALUES (0002, 'mb', 'db', 'linkb');
-INSERT INTO Media VALUES (0003, 'mc', 'dc', 'linkc');
-INSERT INTO Media VALUES (0004, 'ma', 'dd', 'linkd');
+INSERT INTO Media VALUES (0003, 'image', 'about', 'https://cdn57.androidauthority.net/wp-content/uploads/2017/07/Swipe-for-Facebook-screenshot-2017-840x472.jpg');
+INSERT INTO Media VALUES (0005, 'image', 'about', 'https://www.geek.com/wp-content/uploads/2019/05/Instagram-Direct-51619-625x352.jpg');
 INSERT INTO Media VALUES (0005, 'ma', 'de', 'linke');
 INSERT INTO Media VALUES (0006, 'mb', 'df', 'linkb');
 
@@ -336,7 +338,7 @@ INSERT INTO Shipping_info VALUES (0001, 'Japan', CURRENT_TIMESTAMP);
 INSERT INTO Shipping_info VALUES (0002, 'France', CURRENT_TIMESTAMP);
 INSERT INTO Shipping_info VALUES (0002, 'Singapore', CURRENT_TIMESTAMP);
 INSERT INTO Shipping_info VALUES (0003, 'Germany', CURRENT_TIMESTAMP);
-INSERT INTO Shipping_info VALUES (0004, 'United States of America', CURRENT_TIMESTAMP);
+INSERT INTO Shipping_info VALUES (0004, 'United States', CURRENT_TIMESTAMP);
 INSERT INTO Shipping_info VALUES (0005, 'Germany', CURRENT_TIMESTAMP);
 INSERT INTO Shipping_info VALUES (0005, 'United Kingdom', CURRENT_TIMESTAMP);
 INSERT INTO Shipping_info VALUES (0005, 'Netherlands', CURRENT_TIMESTAMP);
@@ -377,17 +379,23 @@ INSERT INTO Rates VALUES ('SirStamfordRaffles', 0001, 3.5);
 INSERT INTO Rates VALUES ('IvonnePreiss', 0003, 1.0);
 INSERT INTO Rates VALUES ('JacobLeBeau', 0003, 3.2);
 INSERT INTO Rates VALUES ('MarissaYeo', 0003, 1.2);
-INSERT INTO Rates VALUES ('MarissaYeo', 0005, 3.4);
+INSERT INTO Rates VALUES ('MarissaYeo', 0005, 5.4);
 INSERT INTO Rates VALUES ('MarissaYeo', 0008, 5.0);
 /*INSERT INTO Rates VALUES ('AngelinaHöger', 0006, 3.9);*/
 
 INSERT INTO Tags VALUES ('Scientist', 0001, 'xxx');
 INSERT INTO Tags VALUES ('Scientist', 0001, 'yyy');
-INSERT INTO Tags VALUES ('SirStamfordRaffles', 0003, 'zzz');
+INSERT INTO Tags VALUES ('SirStamfordRaffles', 0002, 'zzz');
+INSERT INTO Tags VALUES ('SirStamfordRaffles', 0003, 'aaa');
+INSERT INTO Tags VALUES ('SirStamfordRaffles', 0004, 'bbb');
+INSERT INTO Tags VALUES ('SirStamfordRaffles', 0005, 'ccc');
+INSERT INTO Tags VALUES ('SirStamfordRaffles', 0006, 'ddd');
+INSERT INTO Tags VALUES ('SirStamfordRaffles', 0007, 'eee');
+INSERT INTO Tags VALUES ('SirStamfordRaffles', 0008, 'fff');
 
 /*
 INSERT INTO Currency VALUES ('SGD','Singapore');
-INSERT INTO Currency VALUES ('USD','United States of America');
+INSERT INTO Currency VALUES ('USD','United States');
 INSERT INTO Currency VALUES ('EUR','France','Germany','Netherlands');
 INSERT INTO Currency VALUES ('EUR','Germany');
 INSERT INTO Currency VALUES ('JPY','Japan');
@@ -420,3 +428,5 @@ INSERT INTO CurrencyPair VALUES ('GBP', 'USD', 1.30);
 /* negative test case*/
 INSERT INTO Pledges VALUES (0007, 'SirStamfordRaffles', 250, '2019-03-03 00:00:01');
 INSERT INTO CurrencyPair VALUES ('ASC', 'AEV', 1.24);
+INSERT INTO Pledges VALUES (0002, 'SirStamfordRaffles', 250, '2021-01-03 00:00:01');
+
