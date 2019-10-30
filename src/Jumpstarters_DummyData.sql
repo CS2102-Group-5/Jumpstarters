@@ -247,23 +247,24 @@ INSERT INTO Country VALUES ('Yemen','YER');
 INSERT INTO Country VALUES ('Zambia','ZMK');
 INSERT INTO Country VALUES ('Zimbabwe','ZWD');
 
-INSERT INTO UserAccount VALUES ('FounderFather', 'GeorgeWashington', 'georgeWashington@gmail.com', 'United States','cdahsi', '2019-01-01 00:00:01',CURRENT_TIMESTAMP);
-INSERT INTO UserAccount VALUES ('MarieAntoinette', 'MarieAntoinette', 'marieAntoinette@gmail.com', 'France', 'aswvevb', '2019-01-01 00:00:01',CURRENT_TIMESTAMP);
-INSERT INTO UserAccount VALUES ('SirStamfordRaffles', 'StamfordRaffles', 'raffles@gmail.com', 'Singapore', 'daoiend', '2019-01-01 00:00:01',CURRENT_TIMESTAMP);
-INSERT INTO UserAccount VALUES ('ONobunaga', 'Oda Nobunaga', 'odaNobunaga@gmail.com', 'Japan', 'boendoa' ,'2019-01-01 00:00:01',CURRENT_TIMESTAMP);
-INSERT INTO UserAccount VALUES ('Scientist', 'Albert Einstein', 'albertEinstein@gmail.com', 'Germany', 'mspxieg', '2019-01-01 00:00:01',CURRENT_TIMESTAMP);
-INSERT INTO UserAccount VALUES ('SirWinstonChurchhill', 'Winston Churchhill', 'winstonChurchhill@gmail.com', 'United Kingdom', 'peidna', '2019-01-01 00:00:01',CURRENT_TIMESTAMP);
-INSERT INTO UserAccount VALUES ('JohnDoe', 'John Doe', 'johndoe@gmail.com', 'United States', 'qpandugv', '2019-01-01 00:00:01',CURRENT_TIMESTAMP);
-INSERT INTO UserAccount VALUES ('MaryJane', 'Mary Jane', 'maryJane@gmail.com', 'United States', 'cveug', '2019-01-01 00:00:01',CURRENT_TIMESTAMP);
-INSERT INTO UserAccount VALUES ('MJ', 'Mary Jane', 'mj@gmail.com', 'United Kingdom', 'bopeodns', '2019-01-01 00:00:01',CURRENT_TIMESTAMP);
-INSERT INTO UserAccount VALUES ('HenryToh', 'Henry Toh', 'henryToh@gmail.com', 'Singapore', 'flayeb', '2019-01-01 00:00:01',CURRENT_TIMESTAMP);
-INSERT INTO UserAccount VALUES ('MarissaYeo', 'Marissa Yeo', 'marissaYeo@gmail.com', 'Singapore', 'qrxbai', '2019-01-01 00:00:01',CURRENT_TIMESTAMP);
-INSERT INTO UserAccount VALUES ('HubertDubos', 'Hubert Dubos', 'HubertDubos@gmail.com', 'France', 'aldige', '2019-01-01 00:00:01',CURRENT_TIMESTAMP);
-INSERT INTO UserAccount VALUES ('JacobLeBeau', 'Jacob LeBeau', 'JacobLeBeau@gmail.com', 'France', 'apcneidb', '2019-01-01 00:00:01',CURRENT_TIMESTAMP);
-INSERT INTO UserAccount VALUES ('IvonnePreiss', 'Ivonne Preiss', 'IvonnePreiss@gmail.com', 'Germany', 'ciehun', '2019-01-01 00:00:01',CURRENT_TIMESTAMP);
+INSERT INTO UserAccount VALUES ('FounderFather', 'GeorgeWashington', 'georgeWashington@gmail.com', 'United States','cdahsi', false,'2019-01-01 00:00:01',CURRENT_TIMESTAMP);
+INSERT INTO UserAccount VALUES ('MarieAntoinette', 'MarieAntoinette', 'marieAntoinette@gmail.com', 'France', 'aswvevb',false, '2019-01-01 00:00:01',CURRENT_TIMESTAMP);
+INSERT INTO UserAccount VALUES ('SirStamfordRaffles', 'StamfordRaffles', 'raffles@gmail.com', 'Singapore', 'daoiend',false, '2019-01-01 00:00:01',CURRENT_TIMESTAMP);
+INSERT INTO UserAccount VALUES ('ONobunaga', 'Oda Nobunaga', 'odaNobunaga@gmail.com', 'Japan', 'boendoa' ,false,'2019-01-01 00:00:01',CURRENT_TIMESTAMP);
+INSERT INTO UserAccount VALUES ('Scientist', 'Albert Einstein', 'albertEinstein@gmail.com', 'Germany', 'mspxieg',false, '2019-01-01 00:00:01',CURRENT_TIMESTAMP);
+INSERT INTO UserAccount VALUES ('SirWinstonChurchhill', 'Winston Churchhill', 'winstonChurchhill@gmail.com', 'United Kingdom', 'peidna',false, '2019-01-01 00:00:01',CURRENT_TIMESTAMP);
+INSERT INTO UserAccount VALUES ('JohnDoe', 'John Doe', 'johndoe@gmail.com', 'United States', 'qpandugv',false, '2019-01-01 00:00:01',CURRENT_TIMESTAMP);
+INSERT INTO UserAccount VALUES ('MaryJane', 'Mary Jane', 'maryJane@gmail.com', 'United States', 'cveug',false, '2019-01-01 00:00:01',CURRENT_TIMESTAMP);
+INSERT INTO UserAccount VALUES ('MJ', 'Mary Jane', 'mj@gmail.com', 'United Kingdom', 'bopeodns',false, '2019-01-01 00:00:01',CURRENT_TIMESTAMP);
+INSERT INTO UserAccount VALUES ('HenryToh', 'Henry Toh', 'henryToh@gmail.com', 'Singapore', 'flayeb',false, '2019-01-01 00:00:01',CURRENT_TIMESTAMP);
+INSERT INTO UserAccount VALUES ('MarissaYeo', 'Marissa Yeo', 'marissaYeo@gmail.com', 'Singapore', 'qrxbai',false, '2019-01-01 00:00:01',CURRENT_TIMESTAMP);
+INSERT INTO UserAccount VALUES ('HubertDubos', 'Hubert Dubos', 'HubertDubos@gmail.com', 'France', 'aldige',false, '2019-01-01 00:00:01',CURRENT_TIMESTAMP);
+INSERT INTO UserAccount VALUES ('JacobLeBeau', 'Jacob LeBeau', 'JacobLeBeau@gmail.com', 'France', 'apcneidb',false, '2019-01-01 00:00:01',CURRENT_TIMESTAMP);
+INSERT INTO UserAccount VALUES ('IvonnePreiss', 'Ivonne Preiss', 'IvonnePreiss@gmail.com', 'Germany', 'ciehun',false, '2019-01-01 00:00:01',CURRENT_TIMESTAMP);
 /*INSERT INTO UserAccount VALUES ('AngelinaHöger', 'Angelina Höger', 'AngelinaHöger@gmail.com', 'Germany', 'ldkines', '2019-01-01 00:00:01',CURRENT_TIMESTAMP);*/
-INSERT INTO UserAccount VALUES ('HirakawaDaichi', 'Hirakawa Daichi', 'HirakawaDaichi@gmail.com', 'Japan', 'kzbuei', '2019-01-01 00:00:01',CURRENT_TIMESTAMP);
-INSERT INTO UserAccount VALUES ('KuroseMayu', 'Kurose Mayu', 'KuroseMayu@gmail.com', 'Japan', 'spdbuts', '2019-01-01 00:00:01',CURRENT_TIMESTAMP);
+INSERT INTO UserAccount VALUES ('HirakawaDaichi', 'Hirakawa Daichi', 'HirakawaDaichi@gmail.com', 'Japan', 'kzbuei',false, '2019-01-01 00:00:01',CURRENT_TIMESTAMP);
+INSERT INTO UserAccount VALUES ('KuroseMayu', 'Kurose Mayu', 'KuroseMayu@gmail.com', 'Japan', 'spdbuts',false, '2019-01-01 00:00:01',CURRENT_TIMESTAMP);
+INSERT INTO UserAccount VALUES ('Admin1', 'Admin1', 'admin@gmail.com','Singapore','pass',false,'2019-01-01 00:00:01',CURRENT_TIMESTAMP);
 
 INSERT INTO Creator VALUES ('FounderFather', 'FutureLeaders');
 INSERT INTO Creator VALUES ('MarieAntoinette', 'Royalty');
@@ -285,6 +286,8 @@ INSERT INTO Funder VALUES ('IvonnePreiss', ARRAY['Publishing']);
 /*INSERT INTO Funder VALUES ('AngelinaHöger', ARRAY['Food & Craft']);*/
 INSERT INTO Funder VALUES ('HirakawaDaichi', ARRAY['Design & Tech']);
 INSERT INTO Funder VALUES ('KuroseMayu', ARRAY['Music', 'Film']);
+
+INSERT INTO Admin VALUES ('Admin1');
 
 INSERT INTO Projects VALUES (0001, 'Scientist', 'Research Project X', 'Design & Tech', 'This project cures cancer.' ,'Germany', '2019-01-01 00:00:01', 0);
 INSERT INTO Projects VALUES (0002, 'SirWinstonChurchhill', 'Video Broadcast', 'Film', '' ,'United Kingdom', '2019-01-01 00:00:01', 0);
@@ -429,4 +432,7 @@ INSERT INTO CurrencyPair VALUES ('GBP', 'USD', 1.30);
 INSERT INTO Pledges VALUES (0007, 'SirStamfordRaffles', 250, '2019-03-03 00:00:01');
 INSERT INTO CurrencyPair VALUES ('ASC', 'AEV', 1.24);
 INSERT INTO Pledges VALUES (0002, 'SirStamfordRaffles', 250, '2021-01-03 00:00:01');
+UPDATE UserAccount Set suspended = true WHERE user_name = 'Admin1';
+UPDATE UserAccount Set suspended = true WHERE user_name = 'HenryToh';
+
 

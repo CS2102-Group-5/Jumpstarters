@@ -29,6 +29,7 @@ CREATE TABLE UserAccount (
   email		varchar(100) NOT NULL UNIQUE,
   country_name	varchar(100) REFERENCES Country,
   password		varchar(50) NOT NULL,
+  suspended		boolean NOT NULL,
   date_created	timestamp,
   last_login	timestamp,
   CHECK (email LIKE '%_@__%.__%' AND email ~* '^[A-Za-z0-9._%-]+@[A-Za-z0-9.-]+[.][A-Za-z]+$')
@@ -42,6 +43,10 @@ CREATE TABLE Creator (
 CREATE TABLE Funder (
 	user_name varchar(100) PRIMARY KEY REFERENCES UserAccount (user_name) ON DELETE CASCADE,
 	preferences varchar(100) ARRAY
+);
+
+CREATE TABLE Admin (
+	user_name varchar(100) PRIMARY KEY REFERENCES UserAccount (user_name) ON DELETE CASCADE
 );
 
 CREATE TABLE Projects(
@@ -207,6 +212,17 @@ END IF;
 END;
 $$ LANGUAGE plpgsql;
 
+CREATE OR REPLACE FUNCTION admin_check()
+RETURNS TRIGGER AS $$
+DECLARE is_admin boolean;
+BEGIN SELECT true INTO is_admin FROM Admin a WHERE a.user_name = NEW.user_name AND NEW.suspended = true;
+IF is_admin = true THEN
+	RAISE NOTICE 'Not allowed to suspend admin account';
+	RETURN NULL;
+ELSE RETURN NEW;
+END IF;
+END;
+$$ LANGUAGE plpgsql;
 
 CREATE TRIGGER currency_trig
 BEFORE INSERT OR UPDATE ON CurrencyPair
@@ -223,5 +239,9 @@ FOR EACH ROW EXECUTE PROCEDURE funder_check();
 CREATE TRIGGER pledge_date_check
 BEFORE INSERT OR UPDATE ON Pledges
 FOR EACH ROW EXECUTE PROCEDURE date_check();
+
+CREATE TRIGGER suspend_trig
+BEFORE UPDATE ON UserAccount
+FOR EACH ROW EXECUTE PROCEDURE admin_check();
 
 
