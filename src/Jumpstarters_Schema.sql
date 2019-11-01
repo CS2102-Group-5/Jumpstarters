@@ -233,6 +233,13 @@ RETURN (LENGTH(des) - LENGTH(REPLACE(des,sub,'')) + LENGTH(title) - LENGTH(REPLA
 END;
 $$ LANGUAGE plpgsql;
 
+CREATE OR REPLACE FUNCTION add(a numeric,b numeric,c numeric,d numeric)
+RETURNS numeric AS
+$$
+BEGIN
+RETURN a+b+c+d;
+END$$ LANGUAGE plpgsql;
+
 CREATE TRIGGER currency_trig
 BEFORE INSERT OR UPDATE ON CurrencyPair
 FOR EACH ROW EXECUTE PROCEDURE currency_check();
