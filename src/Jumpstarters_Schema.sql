@@ -224,6 +224,15 @@ END IF;
 END;
 $$ LANGUAGE plpgsql;
 
+CREATE OR REPLACE FUNCTION count_occurances(substr text,description text,project_name text, project_type varchar(50)) 
+RETURNS numeric AS
+$$ DECLARE des text; title text; pro_type varchar(50); sub text;
+BEGIN 
+sub := LOWER(substr); des := LOWER(description); title := LOWER(project_name); pro_type := LOWER(project_type);
+RETURN (LENGTH(des) - LENGTH(REPLACE(des,sub,'')) + LENGTH(title) - LENGTH(REPLACE(title,sub,'')) + LENGTH(pro_type) - LENGTH(REPLACE(pro_type,sub,'')))/LENGTH(sub);
+END;
+$$ LANGUAGE plpgsql;
+
 CREATE TRIGGER currency_trig
 BEFORE INSERT OR UPDATE ON CurrencyPair
 FOR EACH ROW EXECUTE PROCEDURE currency_check();
