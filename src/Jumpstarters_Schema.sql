@@ -27,7 +27,7 @@ CREATE TABLE UserAccount (
   user_name     varchar(100) PRIMARY KEY,
   name      varchar(50) NOT NULL,
   email		varchar(100) NOT NULL UNIQUE,
-  country_name	varchar(100) REFERENCES Country,
+  country_name	varchar(100) NOT NULL REFERENCES Country,
   password		varchar(50) NOT NULL,
   suspended		boolean NOT NULL,
   date_created	timestamp,
@@ -154,7 +154,7 @@ SELECT COUNT(*) INTO is_supported FROM Country c1, Country c2 WHERE c1.currency_
 IF is_supported >= 1 THEN
 	RETURN NEW;
 ELSE
-	RAISE NOTICE 'Currency not supported'; 
+	RAISE EXCEPTION 'Currency not supported'; 
 	RETURN NULL;
 END IF;
 END;
@@ -175,7 +175,7 @@ SELECT CASE WHEN ((SELECT COUNT(*) FROM Shipping_info WHERE project_id = NEW.pro
 IF ships_to = 1 THEN
 	RETURN NEW;
 ELSE
-	RAISE NOTICE 'Project does not ship to country';
+	RAISE EXCEPTION 'Project does not ship to country';
 	RETURN NULL;
 END IF;
 END;
@@ -205,7 +205,7 @@ RETURNS TRIGGER AS $$
 DECLARE is_after boolean;
 BEGIN SELECT true INTO is_after FROM History h WHERE h.project_id = NEW.project_id AND NEW.time_stamp > h.end_date AND h.time_stamp = (SELECT MAX(h1.time_stamp) FROM History h1 WHERE h1.project_id = h.project_id);
 IF is_after = true THEN
-	RAISE NOTICE 'Pledge is after the project''s end date';
+	RAISE EXCEPTION 'Pledge is after the project''s end date';
 	RETURN NULL;
 ELSE RETURN NEW;
 END IF;
@@ -217,7 +217,7 @@ RETURNS TRIGGER AS $$
 DECLARE is_admin boolean;
 BEGIN SELECT true INTO is_admin FROM Admin a WHERE a.user_name = NEW.user_name AND NEW.suspended = true;
 IF is_admin = true THEN
-	RAISE NOTICE 'Not allowed to suspend admin account';
+	RAISE EXCEPTION 'Not allowed to suspend admin account';
 	RETURN NULL;
 ELSE RETURN NEW;
 END IF;
