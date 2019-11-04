@@ -15,8 +15,22 @@ DROP TABLE IF EXISTS Tags CASCADE;
 DROP TABLE IF EXISTS Currency CASCADE;
 DROP TABLE IF EXISTS CurrencyPair CASCADE;
 
-DROP TRIGGER IF EXISTS currency_trig CASCADE;
-DROP FUNCTION IF EXISTS currency_check CASCADE;
+DROP TRIGGER IF EXISTS currency_trig;
+DROP TRIGGER IF EXISTS pledge_insert;
+DROP TRIGGER IF EXISTS pledge_funder_check;
+DROP TRIGGER IF EXISTS pledge_date_check;
+DROP TRIGGER IF EXISTS suspend_trig;
+
+
+DROP FUNCTION IF EXISTS currency_check();
+DROP FUNCTION IF EXISTS shipping_check();
+DROP FUNCTION IF EXISTS funder_check();
+DROP FUNCTION IF EXISTS date_check();
+DROP FUNCTION IF EXISTS admin_check();
+DROP FUNCTION IF EXISTS count_occurances(text,text,text,varchar(50));
+DROP FUNCTION IF EXISTS add(numeric,numeric,numeric,numeric);
+
+
 
 CREATE TABLE Country(
 	country_name varchar(100) PRIMARY KEY,
@@ -224,12 +238,12 @@ END IF;
 END;
 $$ LANGUAGE plpgsql;
 
-CREATE OR REPLACE FUNCTION count_occurances(substr text,description text,project_name text, project_type varchar(50)) 
+CREATE OR REPLACE FUNCTION count_occurances(substr text,description text,project_name text, user_name varchar(50)) 
 RETURNS numeric AS
-$$ DECLARE des text; title text; pro_type varchar(50); sub text;
+$$ DECLARE des text; title text; user varchar(50); sub text;
 BEGIN 
-sub := LOWER(substr); des := LOWER(description); title := LOWER(project_name); pro_type := LOWER(project_type);
-RETURN (LENGTH(des) - LENGTH(REPLACE(des,sub,'')) + LENGTH(title) - LENGTH(REPLACE(title,sub,'')) + LENGTH(pro_type) - LENGTH(REPLACE(pro_type,sub,'')))/LENGTH(sub);
+sub := LOWER(substr); des := LOWER(description); title := LOWER(project_name); user := LOWER(user_name);
+RETURN (LENGTH(des) - LENGTH(REPLACE(des,sub,'')) + LENGTH(title) - LENGTH(REPLACE(title,sub,'')) + LENGTH(user) - LENGTH(REPLACE(user,sub,''))/LENGTH(sub));
 END;
 $$ LANGUAGE plpgsql;
 
