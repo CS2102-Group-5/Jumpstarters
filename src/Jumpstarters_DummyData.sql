@@ -395,6 +395,19 @@ INSERT INTO Tags VALUES ('SirStamfordRaffles', 0005, 'ccc');
 INSERT INTO Tags VALUES ('SirStamfordRaffles', 0006, 'ddd');
 INSERT INTO Tags VALUES ('SirStamfordRaffles', 0007, 'eee');
 INSERT INTO Tags VALUES ('SirStamfordRaffles', 0008, 'fff');
+-- Auto-generated SQL script #201911060307
+INSERT INTO public.tags (user_name,project_id,tag_name)
+	VALUES ('MarieAntoinette',1,'xxx');
+INSERT INTO public.tags (user_name,project_id,tag_name)
+	VALUES ('SirStamfordRaffles',1,'yyy');
+INSERT INTO public.tags (user_name,project_id,tag_name)
+	VALUES ('ONobunaga',2,'zzz');
+INSERT INTO public.tags (user_name,project_id,tag_name)
+	VALUES ('Scientist',3,'aaa');
+INSERT INTO public.tags (user_name,project_id,tag_name)
+	VALUES ('SirWinstonChurchhill',4,'bbb');
+INSERT INTO public.tags (user_name,project_id,tag_name)
+	VALUES ('FounderFather',5,'ccc');
 
 /*
 INSERT INTO Currency VALUES ('SGD','Singapore');
