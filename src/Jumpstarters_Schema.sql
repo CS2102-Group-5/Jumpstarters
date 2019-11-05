@@ -237,12 +237,12 @@ END IF;
 END;
 $$ LANGUAGE plpgsql;
 
-CREATE OR REPLACE FUNCTION count_occurances(substr text,description text,project_name text, user_name varchar(50)) 
+CREATE OR REPLACE FUNCTION count_occurances(substr text,description text,project_name text, name1 varchar(50)) 
 RETURNS numeric AS
-$$ DECLARE des text; title text; user varchar(50); sub text;
+$$ DECLARE des text; title text; name varchar(50); sub text;
 BEGIN 
-sub := LOWER(substr); des := LOWER(description); title := LOWER(project_name); user := LOWER(user_name);
-RETURN (LENGTH(des) - LENGTH(REPLACE(des,sub,'')) + LENGTH(title) - LENGTH(REPLACE(title,sub,'')) + LENGTH(user) - LENGTH(REPLACE(user,sub,'')))/LENGTH(sub);
+sub := LOWER(substr); des := LOWER(description); title := LOWER(project_name); name := LOWER(name1);
+RETURN (LENGTH(des) - LENGTH(REPLACE(des,sub,'')) + LENGTH(title) - LENGTH(REPLACE(title,sub,'')) + LENGTH(name) - LENGTH(REPLACE(name,sub,'')))/LENGTH(sub);
 END;
 $$ LANGUAGE plpgsql;
 
