@@ -173,58 +173,6 @@ END IF;
 END;
 $$ LANGUAGE plpgsql;
 
-/*
-If the project does not have any shipping infomation, trivially return true
-If the project does not ship to the country the funder resides in, return false
-Else return true
-*/
-CREATE OR REPLACE FUNCTION shipping_check()
-RETURNS TRIGGER AS $$
-DECLARE ships_to NUMERIC;
-BEGIN
-SELECT CASE WHEN ((SELECT COUNT(*) FROM Shipping_info WHERE project_id = NEW.project_id) = 0) THEN 1 
-		ELSE COUNT(*)
-		END INTO ships_to FROM (SELECT c.country_name FROM Country c INNER JOIN UserAccount u ON u.country_name = c.country_name INNER JOIN Funder f ON f.user_name = u.user_name WHERE f.user_name = NEW.user_name) AS c1, (SELECT country_name FROM Shipping_info WHERE project_id = NEW.project_id) AS c2 WHERE c1.country_name = c2.country_name;
-IF ships_to = 1 THEN
-	RETURN NEW;
-ELSE
-	RAISE EXCEPTION 'Project does not ship to country';
-	RETURN NULL;
-END IF;
-END;
-$$ LANGUAGE plpgsql;
-
-CREATE OR REPLACE FUNCTION funder_check()
-RETURNS TRIGGER AS $$
-DECLARE is_Creator boolean;
-BEGIN
-IF (SELECT COUNT(*) FROM 
-	Projects prj WHERE new.project_id = prj.id AND NEW.user_name = prj.user_name) >= 1
-	THEN is_Creator = true;
-ELSE is_Creator = false;
-END IF;
-
-IF is_Creator = true THEN
-	RAISE NOTICE 'Creator cannot pledge to their own project';
-	RETURN NULL;
-ELSE
-	RETURN NEW;
-END IF;	
-END;
-$$ LANGUAGE plpgsql;
-
-CREATE OR REPLACE FUNCTION date_check()
-RETURNS TRIGGER AS $$
-DECLARE is_after boolean;
-BEGIN SELECT true INTO is_after FROM History h WHERE h.project_id = NEW.project_id AND NEW.time_stamp > h.end_date AND h.time_stamp = (SELECT MAX(h1.time_stamp) FROM History h1 WHERE h1.project_id = h.project_id);
-IF is_after = true THEN
-	RAISE EXCEPTION 'Pledge is after the project''s end date';
-	RETURN NULL;
-ELSE RETURN NEW;
-END IF;
-END;
-$$ LANGUAGE plpgsql;
-
 CREATE OR REPLACE FUNCTION admin_check()
 RETURNS TRIGGER AS $$
 DECLARE is_admin boolean;
@@ -237,12 +185,12 @@ END IF;
 END;
 $$ LANGUAGE plpgsql;
 
-CREATE OR REPLACE FUNCTION count_occurances(substr text,description text,project_name text, user_name varchar(50)) 
+CREATE OR REPLACE FUNCTION count_occurances(substr text,description text,project_name text, name1 varchar(50)) 
 RETURNS numeric AS
-$$ DECLARE des text; title text; user varchar(50); sub text;
+$$ DECLARE des text; title text; name varchar(50); sub text;
 BEGIN 
-sub := LOWER(substr); des := LOWER(description); title := LOWER(project_name); user := LOWER(user_name);
-RETURN (LENGTH(des) - LENGTH(REPLACE(des,sub,'')) + LENGTH(title) - LENGTH(REPLACE(title,sub,'')) + LENGTH(user) - LENGTH(REPLACE(user,sub,'')))/LENGTH(sub);
+sub := LOWER(substr); des := LOWER(description); title := LOWER(project_name); name := LOWER(name1);
+RETURN (LENGTH(des) - LENGTH(REPLACE(des,sub,'')) + LENGTH(title) - LENGTH(REPLACE(title,sub,'')) + LENGTH(name) - LENGTH(REPLACE(name,sub,'')))/LENGTH(sub);
 END;
 $$ LANGUAGE plpgsql;
 
@@ -253,24 +201,69 @@ BEGIN
 RETURN a+b+c+d;
 END$$ LANGUAGE plpgsql;
 
+CREATE OR REPLACE PROCEDURE cancel_project(id int)
+AS $$ 
+BEGIN 
+WITH X AS
+(SELECT end_date, goal FROM History WHERE project_id = id AND (id,time_stamp) IN (SELECT project_id, MAX(time_stamp) FROM History GROUP BY project_id))
+INSERT INTO History VALUES(id,'Cancelled',(SELECT end_date FROM X),(SELECT goal FROM X),CURRENT_TIMESTAMP);
+END $$ LANGUAGE plpgsql;
+
+CREATE OR REPLACE PROCEDURE create_new_creator(user_name text, name text, email text, country_name text, password text, organization text)
+AS $$ 
+BEGIN 
+INSERT INTO UserAccount VALUES(user_name, name, email, country_name, password, 'false', CURRENT_TIMESTAMP);
+INSERT INTO Creator VALUES(user_name, organization);
+INSERT INTO Funder VALUES(user_name);
+END $$ LANGUAGE plpgsql;
+
+CREATE OR REPLACE PROCEDURE create_new_funder(user_name varchar(100), name varchar(50), email varchar(100), country_name varchar(100), password varchar(50), preferences varchar(100) ARRAY)
+AS $$
+BEGIN 
+INSERT INTO UserAccount VALUES(user_name, name, email, country_name, password, 'false', CURRENT_TIMESTAMP);
+INSERT INTO Funder VALUES(user_name, preferences);
+END $$ LANGUAGE plpgsql;
+
 CREATE TRIGGER currency_trig
 BEFORE INSERT OR UPDATE ON CurrencyPair
 FOR EACH ROW EXECUTE PROCEDURE currency_check();
-
-CREATE TRIGGER pledge_insert
-BEFORE INSERT ON Pledges
-FOR EACH ROW EXECUTE PROCEDURE shipping_check();
-
-CREATE TRIGGER pledge_funder_check
-BEFORE INSERT ON Pledges
-FOR EACH ROW EXECUTE PROCEDURE funder_check();
-
-CREATE TRIGGER pledge_date_check
-BEFORE INSERT OR UPDATE ON Pledges
-FOR EACH ROW EXECUTE PROCEDURE date_check();
 
 CREATE TRIGGER suspend_trig
 BEFORE UPDATE ON UserAccount
 FOR EACH ROW EXECUTE PROCEDURE admin_check();
 
+CREATE OR REPLACE FUNCTION check_valid_pledge()
+RETURNS TRIGGER AS $$
+DECLARE 
+	ships_to INTEGER; is_Creator INTEGER; is_after BOOLEAN;
+BEGIN 
+	SELECT CASE WHEN 
+		((SELECT COUNT(*) FROM Shipping_info WHERE project_id = NEW.project_id) = 0) THEN 1 
+			ELSE COUNT(*)
+			END INTO ships_to FROM (
+				SELECT c.country_name FROM Country c 
+				INNER JOIN UserAccount u ON u.country_name = c.country_name 
+				INNER JOIN Funder f ON f.user_name = u.user_name WHERE f.user_name = NEW.user_name) AS c1, 
+				(SELECT country_name FROM Shipping_info WHERE project_id = NEW.project_id) AS c2 WHERE c1.country_name = c2.country_name;
+	SELECT COUNT(*) INTO is_Creator FROM Projects prj WHERE NEW.project_id = prj.id AND NEW.user_name = prj.user_Name;
+	SELECT true INTO is_after FROM History h 
+		WHERE h.project_id = NEW.project_id 
+			AND (NEW.time_stamp > h.end_date OR h.project_status <> 'Ongoing')
+			AND h.time_stamp = (SELECT MAX(h1.time_stamp) FROM History h1 WHERE h1.project_id = h.project_id);
+	IF ships_to <> 1 THEN
+		RAISE EXCEPTION 'Invalid pledge as project does not ship to the user location';
+		RETURN NULL;
+	ELSEIF is_Creator = 1 THEN
+		RAISE EXCEPTION 'Invalid pledge as project creator cannot pledge to their own project';
+		RETURN NULL;
+	ELSEIF is_after = true THEN
+		RAISE EXCEPTION 'Invalid pledge as pledge is made after deadline or project is not Ongoing';
+		RETURN NULL;
+	END IF;
+	RETURN NEW;
+END; $$
+LANGUAGE plpgsql;
 
+CREATE TRIGGER valid_pledge
+BEFORE INSERT ON Pledges
+FOR EACH ROW EXECUTE PROCEDURE check_valid_pledge();
