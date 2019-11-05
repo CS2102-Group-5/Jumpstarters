@@ -243,7 +243,7 @@ RETURNS numeric AS
 $$ DECLARE des text; title text; user varchar(50); sub text;
 BEGIN 
 sub := LOWER(substr); des := LOWER(description); title := LOWER(project_name); user := LOWER(user_name);
-RETURN (LENGTH(des) - LENGTH(REPLACE(des,sub,'')) + LENGTH(title) - LENGTH(REPLACE(title,sub,'')) + LENGTH(user) - LENGTH(REPLACE(user,sub,''))/LENGTH(sub));
+RETURN (LENGTH(des) - LENGTH(REPLACE(des,sub,'')) + LENGTH(title) - LENGTH(REPLACE(title,sub,'')) + LENGTH(user) - LENGTH(REPLACE(user,sub,'')))/LENGTH(sub);
 END;
 $$ LANGUAGE plpgsql;
 
