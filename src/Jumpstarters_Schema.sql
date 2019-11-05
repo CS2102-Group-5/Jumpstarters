@@ -173,58 +173,6 @@ END IF;
 END;
 $$ LANGUAGE plpgsql;
 
-/*
-If the project does not have any shipping infomation, trivially return true
-If the project does not ship to the country the funder resides in, return false
-Else return true
-*/
-CREATE OR REPLACE FUNCTION shipping_check()
-RETURNS TRIGGER AS $$
-DECLARE ships_to NUMERIC;
-BEGIN
-SELECT CASE WHEN ((SELECT COUNT(*) FROM Shipping_info WHERE project_id = NEW.project_id) = 0) THEN 1 
-		ELSE COUNT(*)
-		END INTO ships_to FROM (SELECT c.country_name FROM Country c INNER JOIN UserAccount u ON u.country_name = c.country_name INNER JOIN Funder f ON f.user_name = u.user_name WHERE f.user_name = NEW.user_name) AS c1, (SELECT country_name FROM Shipping_info WHERE project_id = NEW.project_id) AS c2 WHERE c1.country_name = c2.country_name;
-IF ships_to = 1 THEN
-	RETURN NEW;
-ELSE
-	RAISE EXCEPTION 'Project does not ship to country';
-	RETURN NULL;
-END IF;
-END;
-$$ LANGUAGE plpgsql;
-
-CREATE OR REPLACE FUNCTION funder_check()
-RETURNS TRIGGER AS $$
-DECLARE is_Creator boolean;
-BEGIN
-IF (SELECT COUNT(*) FROM 
-	Projects prj WHERE new.project_id = prj.id AND NEW.user_name = prj.user_name) >= 1
-	THEN is_Creator = true;
-ELSE is_Creator = false;
-END IF;
-
-IF is_Creator = true THEN
-	RAISE NOTICE 'Creator cannot pledge to their own project';
-	RETURN NULL;
-ELSE
-	RETURN NEW;
-END IF;	
-END;
-$$ LANGUAGE plpgsql;
-
-CREATE OR REPLACE FUNCTION date_check()
-RETURNS TRIGGER AS $$
-DECLARE is_after boolean;
-BEGIN SELECT true INTO is_after FROM History h WHERE h.project_id = NEW.project_id AND NEW.time_stamp > h.end_date AND h.time_stamp = (SELECT MAX(h1.time_stamp) FROM History h1 WHERE h1.project_id = h.project_id);
-IF is_after = true THEN
-	RAISE EXCEPTION 'Pledge is after the project''s end date';
-	RETURN NULL;
-ELSE RETURN NEW;
-END IF;
-END;
-$$ LANGUAGE plpgsql;
-
 CREATE OR REPLACE FUNCTION admin_check()
 RETURNS TRIGGER AS $$
 DECLARE is_admin boolean;
@@ -280,20 +228,43 @@ CREATE TRIGGER currency_trig
 BEFORE INSERT OR UPDATE ON CurrencyPair
 FOR EACH ROW EXECUTE PROCEDURE currency_check();
 
-CREATE TRIGGER pledge_insert
-BEFORE INSERT ON Pledges
-FOR EACH ROW EXECUTE PROCEDURE shipping_check();
-
-CREATE TRIGGER pledge_funder_check
-BEFORE INSERT ON Pledges
-FOR EACH ROW EXECUTE PROCEDURE funder_check();
-
-CREATE TRIGGER pledge_date_check
-BEFORE INSERT OR UPDATE ON Pledges
-FOR EACH ROW EXECUTE PROCEDURE date_check();
-
 CREATE TRIGGER suspend_trig
 BEFORE UPDATE ON UserAccount
 FOR EACH ROW EXECUTE PROCEDURE admin_check();
 
+CREATE OR REPLACE FUNCTION check_valid_pledge()
+RETURNS TRIGGER AS $$
+DECLARE 
+	ships_to INTEGER; is_Creator INTEGER; is_after BOOLEAN;
+BEGIN 
+	SELECT CASE WHEN 
+		((SELECT COUNT(*) FROM Shipping_info WHERE project_id = NEW.project_id) = 0) THEN 1 
+			ELSE COUNT(*)
+			END INTO ships_to FROM (
+				SELECT c.country_name FROM Country c 
+				INNER JOIN UserAccount u ON u.country_name = c.country_name 
+				INNER JOIN Funder f ON f.user_name = u.user_name WHERE f.user_name = NEW.user_name) AS c1, 
+				(SELECT country_name FROM Shipping_info WHERE project_id = NEW.project_id) AS c2 WHERE c1.country_name = c2.country_name;
+	SELECT COUNT(*) INTO is_Creator FROM Projects prj WHERE NEW.project_id = prj.id AND NEW.user_name = prj.user_Name;
+	SELECT true INTO is_after FROM History h 
+		WHERE h.project_id = NEW.project_id 
+			AND NEW.time_stamp > h.end_date 
+			AND h.time_stamp = (SELECT MAX(h1.time_stamp) FROM History h1 WHERE h1.project_id = h.project_id);
+	IF ships_to = 0 THEN
+		RAISE EXCEPTION 'Invalid pledge as project does not ship to the user location';
+		RETURN NULL;
+	ELSEIF is_Creator = 1 THEN
+		RAISE EXCEPTION 'Invalid pledge as project creator cannot pledge to their own project';
+		RETURN NULL;
+	ELSEIF is_after = true THEN
+		RAISE EXCEPTION 'Invalid pledge as pledge is made after deadline';
+		RETURN NULL;
+	END IF;
+	RETURN NEW;
+END; $$
+LANGUAGE plpgsql;
+CREATE TRIGGER valid_pledge
+BEFORE INSERT ON Pledges
+FOR EACH ROW
+EXECUTE PROCEDURE check_valid_pledge()										  
 
