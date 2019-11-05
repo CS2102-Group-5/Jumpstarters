@@ -254,6 +254,29 @@ BEGIN
 RETURN a+b+c+d;
 END$$ LANGUAGE plpgsql;
 
+CREATE OR REPLACE PROCEDURE cancel_project(id int)
+AS $$ 
+BEGIN 
+WITH X AS
+(SELECT end_date, goal FROM History WHERE project_id = id AND (id,time_stamp) IN (SELECT project_id, MAX(time_stamp) FROM History GROUP BY project_id))
+INSERT INTO History VALUES(id,'Cancelled',(SELECT end_date FROM X),(SELECT goal FROM X),CURRENT_TIMESTAMP);
+END $$ LANGUAGE plpgsql;
+
+CREATE OR REPLACE PROCEDURE create_new_creator(user_name text, name text, email text, country_name text, password text, organization text)
+AS $$ 
+BEGIN 
+INSERT INTO UserAccount VALUES(user_name, name, email, country_name, password, 'false', CURRENT_TIMESTAMP);
+INSERT INTO Creator VALUES(user_name, organization);
+INSERT INTO Funder VALUES(user_name);
+END $$ LANGUAGE plpgsql;
+
+CREATE OR REPLACE PROCEDURE create_new_funder(user_name varchar(100), name varchar(50), email varchar(100), country_name varchar(100), password varchar(50), preferences varchar(100) ARRAY)
+AS $$
+BEGIN 
+INSERT INTO UserAccount VALUES(user_name, name, email, country_name, password, 'false', CURRENT_TIMESTAMP);
+INSERT INTO Funder VALUES(user_name, preferences);
+END $$ LANGUAGE plpgsql;
+
 CREATE TRIGGER currency_trig
 BEFORE INSERT OR UPDATE ON CurrencyPair
 FOR EACH ROW EXECUTE PROCEDURE currency_check();
