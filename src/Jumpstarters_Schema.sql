@@ -248,23 +248,22 @@ BEGIN
 	SELECT COUNT(*) INTO is_Creator FROM Projects prj WHERE NEW.project_id = prj.id AND NEW.user_name = prj.user_Name;
 	SELECT true INTO is_after FROM History h 
 		WHERE h.project_id = NEW.project_id 
-			AND NEW.time_stamp > h.end_date 
+			AND (NEW.time_stamp > h.end_date OR h.project_status <> 'Ongoing')
 			AND h.time_stamp = (SELECT MAX(h1.time_stamp) FROM History h1 WHERE h1.project_id = h.project_id);
-	IF ships_to = 0 THEN
+	IF ships_to <> 1 THEN
 		RAISE EXCEPTION 'Invalid pledge as project does not ship to the user location';
 		RETURN NULL;
 	ELSEIF is_Creator = 1 THEN
 		RAISE EXCEPTION 'Invalid pledge as project creator cannot pledge to their own project';
 		RETURN NULL;
 	ELSEIF is_after = true THEN
-		RAISE EXCEPTION 'Invalid pledge as pledge is made after deadline';
+		RAISE EXCEPTION 'Invalid pledge as pledge is made after deadline or project is not Ongoing';
 		RETURN NULL;
 	END IF;
 	RETURN NEW;
 END; $$
 LANGUAGE plpgsql;
+
 CREATE TRIGGER valid_pledge
 BEFORE INSERT ON Pledges
-FOR EACH ROW
-EXECUTE PROCEDURE check_valid_pledge()										  
-
+FOR EACH ROW EXECUTE PROCEDURE check_valid_pledge();
