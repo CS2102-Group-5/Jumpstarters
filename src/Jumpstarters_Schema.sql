@@ -11,24 +11,18 @@ DROP TABLE IF EXISTS Pledges CASCADE;
 DROP TABLE IF EXISTS Follows CASCADE;
 DROP TABLE IF EXISTS Rates CASCADE;
 DROP TABLE IF EXISTS Tags CASCADE;
-DROP TABLE IF EXISTS Currency CASCADE;
 DROP TABLE IF EXISTS CurrencyPair CASCADE;
 
 DROP TRIGGER IF EXISTS currency_trig;
-DROP TRIGGER IF EXISTS pledge_insert;
-DROP TRIGGER IF EXISTS pledge_funder_check;
-DROP TRIGGER IF EXISTS pledge_date_check;
+DROP TRIGGER IF EXISTS valid_pledge;
 DROP TRIGGER IF EXISTS suspend_trig;
 
 
 DROP FUNCTION IF EXISTS currency_check();
-DROP FUNCTION IF EXISTS shipping_check();
-DROP FUNCTION IF EXISTS funder_check();
-DROP FUNCTION IF EXISTS date_check();
 DROP FUNCTION IF EXISTS admin_check();
+DROP FUNCTION IF EXISTS check_valid_pledge(integer, integer, boolean);
 DROP FUNCTION IF EXISTS count_occurances(text,text,text,varchar(50));
 DROP FUNCTION IF EXISTS add(numeric,numeric,numeric,numeric);
-
 
 
 CREATE TABLE Country(
