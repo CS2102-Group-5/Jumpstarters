@@ -106,7 +106,6 @@ CREATE TABLE Media(
 CREATE TABLE Shipping_info(
 	project_id int REFERENCES Projects (id) ON DELETE CASCADE,
 	country_name varchar(100) REFERENCES Country (country_name),
-	estimated_shipping_date timestamp NOT NULL,
 	PRIMARY KEY (project_id, country_name)
 );
 
