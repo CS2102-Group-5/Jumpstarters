@@ -19,6 +19,7 @@ DROP TRIGGER IF EXISTS pledge_insert;
 DROP TRIGGER IF EXISTS pledge_funder_check;
 DROP TRIGGER IF EXISTS pledge_date_check;
 DROP TRIGGER IF EXISTS suspend_trig;
+DROP TRIGGER IF EXISTS valid_pledge;
 
 
 DROP FUNCTION IF EXISTS currency_check();
@@ -28,8 +29,14 @@ DROP FUNCTION IF EXISTS date_check();
 DROP FUNCTION IF EXISTS admin_check();
 DROP FUNCTION IF EXISTS count_occurances(text,text,text,varchar(50));
 DROP FUNCTION IF EXISTS add(numeric,numeric,numeric,numeric);
+DROP FUNCTION IF EXISTS check_valid_pledge();
+DROP FUNCTION IF EXISTS get_projects_info(varchar(100));
+DROP FUNCTION IF EXISTS get_projects_info_by_type(varchar(100),varchar(50));
+DROP FUNCTION IF EXISTS get_projects_info_by_tags(varchar(100),varchar(50));
 
-
+DROP PROCEDURE IF EXISTS cancel_project(int);
+DROP PROCEDURE IF EXISTS create_new_creator(text,text,text,text,text,text);
+DROP PROCEDURE IF EXISTS create_new_funder(varchar(100),varchar(50),varchar(100),varchar(100),varchar(50),varchar(100) ARRAY);
 
 CREATE TABLE Country(
 	country_name varchar(100) PRIMARY KEY,
@@ -200,37 +207,6 @@ BEGIN
 RETURN a+b+c+d;
 END$$ LANGUAGE plpgsql;
 
-CREATE OR REPLACE PROCEDURE cancel_project(id int)
-AS $$ 
-BEGIN 
-WITH X AS
-(SELECT end_date, goal FROM History WHERE project_id = id AND (id,time_stamp) IN (SELECT project_id, MAX(time_stamp) FROM History GROUP BY project_id))
-INSERT INTO History VALUES(id,'Cancelled',(SELECT end_date FROM X),(SELECT goal FROM X),CURRENT_TIMESTAMP);
-END $$ LANGUAGE plpgsql;
-
-CREATE OR REPLACE PROCEDURE create_new_creator(user_name text, name text, email text, country_name text, password text, organization text)
-AS $$ 
-BEGIN 
-INSERT INTO UserAccount VALUES(user_name, name, email, country_name, password, 'false', CURRENT_TIMESTAMP);
-INSERT INTO Creator VALUES(user_name, organization);
-INSERT INTO Funder VALUES(user_name);
-END $$ LANGUAGE plpgsql;
-
-CREATE OR REPLACE PROCEDURE create_new_funder(user_name varchar(100), name varchar(50), email varchar(100), country_name varchar(100), password varchar(50), preferences varchar(100) ARRAY)
-AS $$
-BEGIN 
-INSERT INTO UserAccount VALUES(user_name, name, email, country_name, password, 'false', CURRENT_TIMESTAMP);
-INSERT INTO Funder VALUES(user_name, preferences);
-END $$ LANGUAGE plpgsql;
-
-CREATE TRIGGER currency_trig
-BEFORE INSERT OR UPDATE ON CurrencyPair
-FOR EACH ROW EXECUTE PROCEDURE currency_check();
-
-CREATE TRIGGER suspend_trig
-BEFORE UPDATE ON UserAccount
-FOR EACH ROW EXECUTE PROCEDURE admin_check();
-
 CREATE OR REPLACE FUNCTION check_valid_pledge()
 RETURNS TRIGGER AS $$
 DECLARE 
@@ -278,11 +254,11 @@ AS $$
 BEGIN 
 RETURN QUERY
 WITH X AS 
-(SELECT p.id, p.user_name, p.project_name, p.project_description, m.link, h.project_status, h.end_date,true FROM Projects p INNER JOIN Media m ON m.project_id = p.id INNER JOIN History h ON h.project_id = p.id WHERE m.description = 'about' AND (h.project_id, h.time_stamp) IN (SELECT project_id, MAX(time_stamp) FROM History GROUP BY project_id) AND country_name_in IN (SELECT s.country_name FROM Shipping_info s WHERE s.project_id = p.id) ORDER BY project_name),
+(SELECT p.id, p.user_name, p.project_name, p.project_description, m.link, h.project_status, h.end_date,true FROM Projects p INNER JOIN Media m ON m.project_id = p.id INNER JOIN History h ON h.project_id = p.id WHERE m.description = 'about' AND (h.project_id, h.time_stamp) IN (SELECT project_id, MAX(time_stamp) FROM History GROUP BY project_id) AND (country_name_in IN (SELECT s.country_name FROM Shipping_info s WHERE s.project_id = p.id) OR (SELECT COUNT(*) = 0 FROM Shipping_info s WHERE s.project_id = p.id)) ORDER BY project_name),
 Y AS (
 SELECT p.id, p.user_name, p.project_name, p.project_description, m.link, h.project_status, h.end_date,false FROM Projects p INNER JOIN Media m ON m.project_id = p.id INNER JOIN History h ON h.project_id = p.id WHERE m.description = 'about' AND (h.project_id, h.time_stamp) IN (SELECT project_id, MAX(time_stamp) FROM History GROUP BY project_id)
 EXCEPT
-SELECT p.id, p.user_name, p.project_name, p.project_description, m.link, h.project_status, h.end_date,false FROM Projects p INNER JOIN Media m ON m.project_id = p.id INNER JOIN History h ON h.project_id = p.id WHERE m.description = 'about' AND (h.project_id, h.time_stamp) IN (SELECT project_id, MAX(time_stamp) FROM History GROUP BY project_id) AND country_name_in IN (SELECT s.country_name FROM Shipping_info s WHERE s.project_id = p.id) ORDER BY project_name
+SELECT p.id, p.user_name, p.project_name, p.project_description, m.link, h.project_status, h.end_date,false FROM Projects p INNER JOIN Media m ON m.project_id = p.id INNER JOIN History h ON h.project_id = p.id WHERE m.description = 'about' AND (h.project_id, h.time_stamp) IN (SELECT project_id, MAX(time_stamp) FROM History GROUP BY project_id) AND (country_name_in IN (SELECT s.country_name FROM Shipping_info s WHERE s.project_id = p.id) OR (SELECT COUNT(*) = 0 FROM Shipping_info s WHERE s.project_id = p.id)) ORDER BY project_name
 )
 SELECT * FROM X UNION ALL SELECT * FROM Y;
 END; $$ LANGUAGE plpgsql;
@@ -302,11 +278,11 @@ AS $$
 BEGIN 
 RETURN QUERY
 WITH X AS 
-(SELECT p.id, p.user_name, p.project_name, p.project_description, m.link, h.project_status, h.end_date,true FROM Projects p INNER JOIN Media m ON m.project_id = p.id INNER JOIN History h ON h.project_id = p.id WHERE m.description = 'about' AND p.project_type = type_in AND (h.project_id, h.time_stamp) IN (SELECT project_id, MAX(time_stamp) FROM History GROUP BY project_id) AND country_name_in IN (SELECT s.country_name FROM Shipping_info s WHERE s.project_id = p.id) ORDER BY project_name),
+(SELECT p.id, p.user_name, p.project_name, p.project_description, m.link, h.project_status, h.end_date,true FROM Projects p INNER JOIN Media m ON m.project_id = p.id INNER JOIN History h ON h.project_id = p.id WHERE m.description = 'about' AND p.project_type = type_in AND (h.project_id, h.time_stamp) IN (SELECT project_id, MAX(time_stamp) FROM History GROUP BY project_id) AND (country_name_in IN (SELECT s.country_name FROM Shipping_info s WHERE s.project_id = p.id) OR (SELECT COUNT(*) = 0 FROM Shipping_info s WHERE s.project_id = p.id)) ORDER BY project_name) ,
 Y AS (
 SELECT p.id, p.user_name, p.project_name, p.project_description, m.link, h.project_status, h.end_date,false FROM Projects p INNER JOIN Media m ON m.project_id = p.id INNER JOIN History h ON h.project_id = p.id WHERE m.description = 'about' AND p.project_type = type_in AND (h.project_id, h.time_stamp) IN (SELECT project_id, MAX(time_stamp) FROM History GROUP BY project_id)
 EXCEPT
-SELECT p.id, p.user_name, p.project_name, p.project_description, m.link, h.project_status, h.end_date,false FROM Projects p INNER JOIN Media m ON m.project_id = p.id INNER JOIN History h ON h.project_id = p.id WHERE m.description = 'about' AND p.project_type = type_in AND (h.project_id, h.time_stamp) IN (SELECT project_id, MAX(time_stamp) FROM History GROUP BY project_id) AND country_name_in IN (SELECT s.country_name FROM Shipping_info s WHERE s.project_id = p.id) ORDER BY project_name
+SELECT p.id, p.user_name, p.project_name, p.project_description, m.link, h.project_status, h.end_date,false FROM Projects p INNER JOIN Media m ON m.project_id = p.id INNER JOIN History h ON h.project_id = p.id WHERE m.description = 'about' AND p.project_type = type_in AND (h.project_id, h.time_stamp) IN (SELECT project_id, MAX(time_stamp) FROM History GROUP BY project_id) AND (country_name_in IN (SELECT s.country_name FROM Shipping_info s WHERE s.project_id = p.id) OR (SELECT COUNT(*) = 0 FROM Shipping_info s WHERE s.project_id = p.id)) ORDER BY project_name
 )
 SELECT * FROM X UNION ALL SELECT * FROM Y;
 END; $$ LANGUAGE plpgsql;
@@ -326,14 +302,47 @@ AS $$
 BEGIN 
 RETURN QUERY
 WITH X AS 
-(SELECT p.id, p.user_name, p.project_name, p.project_description, m.link, h.project_status, h.end_date,true FROM Projects p INNER JOIN Media m ON m.project_id = p.id INNER JOIN History h ON h.project_id = p.id INNER JOIN Tags t ON t.project_id = p.id WHERE m.description = 'about' AND (h.project_id, h.time_stamp) IN (SELECT project_id, MAX(time_stamp) FROM History GROUP BY project_id) AND country_name_in IN (SELECT s.country_name FROM Shipping_info s WHERE s.project_id = p.id) AND t.tag_name = tag ORDER BY project_name),
+(SELECT p.id, p.user_name, p.project_name, p.project_description, m.link, h.project_status, h.end_date,true FROM Projects p INNER JOIN Media m ON m.project_id = p.id INNER JOIN History h ON h.project_id = p.id INNER JOIN Tags t ON t.project_id = p.id WHERE m.description = 'about' AND (h.project_id, h.time_stamp) IN (SELECT project_id, MAX(time_stamp) FROM History GROUP BY project_id) AND (country_name_in IN (SELECT s.country_name FROM Shipping_info s WHERE s.project_id = p.id) OR (SELECT COUNT(*) = 0 FROM Shipping_info s WHERE s.project_id = p.id)) AND t.tag_name = tag ORDER BY project_name),
 Y AS (
 SELECT p.id, p.user_name, p.project_name, p.project_description, m.link, h.project_status, h.end_date,false FROM Projects p INNER JOIN Media m ON m.project_id = p.id INNER JOIN History h ON h.project_id = p.id INNER JOIN Tags t ON t.project_id = p.id WHERE m.description = 'about' AND (h.project_id, h.time_stamp) IN (SELECT project_id, MAX(time_stamp) FROM History GROUP BY project_id) AND t.tag_name = tag
 EXCEPT
-SELECT p.id, p.user_name, p.project_name, p.project_description, m.link, h.project_status, h.end_date,true FROM Projects p INNER JOIN Media m ON m.project_id = p.id INNER JOIN History h ON h.project_id = p.id INNER JOIN Tags t ON t.project_id = p.id WHERE m.description = 'about' AND (h.project_id, h.time_stamp) IN (SELECT project_id, MAX(time_stamp) FROM History GROUP BY project_id) AND country_name_in IN (SELECT s.country_name FROM Shipping_info s WHERE s.project_id = p.id) AND t.tag_name = tag ORDER BY project_name
+SELECT p.id, p.user_name, p.project_name, p.project_description, m.link, h.project_status, h.end_date,false FROM Projects p INNER JOIN Media m ON m.project_id = p.id INNER JOIN History h ON h.project_id = p.id INNER JOIN Tags t ON t.project_id = p.id WHERE m.description = 'about' AND (h.project_id, h.time_stamp) IN (SELECT project_id, MAX(time_stamp) FROM History GROUP BY project_id) AND (country_name_in IN (SELECT s.country_name FROM Shipping_info s WHERE s.project_id = p.id) OR (SELECT COUNT(*) = 0 FROM Shipping_info s WHERE s.project_id = p.id)) AND t.tag_name = tag ORDER BY project_name
 )
 SELECT * FROM X UNION ALL SELECT * FROM Y;
 END; $$ LANGUAGE plpgsql;
+
+CREATE OR REPLACE PROCEDURE cancel_project(id int)
+AS $$ 
+BEGIN 
+WITH X AS
+(SELECT end_date, goal, project_id FROM History WHERE project_id = id AND (id,time_stamp) IN (SELECT project_id, MAX(time_stamp) FROM History GROUP BY project_id))
+INSERT INTO History VALUES(id,
+	CASE WHEN (SELECT true FROM pledges p INNER JOIN X on X.project_id = p.project_id GROUP BY X.goal HAVING X.goal <= SUM(p.pledge)) THEN 'Success' WHEN (SELECT true FROM pledges p INNER JOIN X on X.project_id = p.project_id GROUP BY X.goal HAVING X.goal > SUM(p.pledge)) THEN 'Completed' END
+	,(SELECT end_date FROM X),(SELECT goal FROM X),CURRENT_TIMESTAMP);
+END $$ LANGUAGE plpgsql;
+
+CREATE OR REPLACE PROCEDURE create_new_creator(user_name text, name text, email text, country_name text, password text, organization text)
+AS $$ 
+BEGIN 
+INSERT INTO UserAccount VALUES(user_name, name, email, country_name, password, 'false', CURRENT_TIMESTAMP);
+INSERT INTO Creator VALUES(user_name, organization);
+INSERT INTO Funder VALUES(user_name);
+END $$ LANGUAGE plpgsql;
+
+CREATE OR REPLACE PROCEDURE create_new_funder(user_name varchar(100), name varchar(50), email varchar(100), country_name varchar(100), password varchar(50), preferences varchar(100) ARRAY)
+AS $$
+BEGIN 
+INSERT INTO UserAccount VALUES(user_name, name, email, country_name, password, 'false', CURRENT_TIMESTAMP);
+INSERT INTO Funder VALUES(user_name, preferences);
+END $$ LANGUAGE plpgsql;
+
+CREATE TRIGGER currency_trig
+BEFORE INSERT OR UPDATE ON CurrencyPair
+FOR EACH ROW EXECUTE PROCEDURE currency_check();
+
+CREATE TRIGGER suspend_trig
+BEFORE UPDATE ON UserAccount
+FOR EACH ROW EXECUTE PROCEDURE admin_check();
 
 CREATE TRIGGER valid_pledge
 BEFORE INSERT ON Pledges
