@@ -11,18 +11,24 @@ DROP TABLE IF EXISTS Pledges CASCADE;
 DROP TABLE IF EXISTS Follows CASCADE;
 DROP TABLE IF EXISTS Rates CASCADE;
 DROP TABLE IF EXISTS Tags CASCADE;
+DROP TABLE IF EXISTS Currency CASCADE;
 DROP TABLE IF EXISTS CurrencyPair CASCADE;
 
 DROP TRIGGER IF EXISTS currency_trig;
-DROP TRIGGER IF EXISTS valid_pledge;
+DROP TRIGGER IF EXISTS pledge_insert;
+DROP TRIGGER IF EXISTS pledge_funder_check;
+DROP TRIGGER IF EXISTS pledge_date_check;
 DROP TRIGGER IF EXISTS suspend_trig;
 
 
 DROP FUNCTION IF EXISTS currency_check();
+DROP FUNCTION IF EXISTS shipping_check();
+DROP FUNCTION IF EXISTS funder_check();
+DROP FUNCTION IF EXISTS date_check();
 DROP FUNCTION IF EXISTS admin_check();
-DROP FUNCTION IF EXISTS check_valid_pledge(integer, integer, boolean);
 DROP FUNCTION IF EXISTS count_occurances(text,text,text,varchar(50));
 DROP FUNCTION IF EXISTS add(numeric,numeric,numeric,numeric);
+
 
 
 CREATE TABLE Country(
@@ -256,6 +262,78 @@ BEGIN
 	RETURN NEW;
 END; $$
 LANGUAGE plpgsql;
+
+CREATE OR REPLACE FUNCTION get_projects_info(country_name_in varchar(100))
+RETURNS TABLE(
+	id int,
+	user_name varchar(100),
+	project_name text,
+	description text,
+	link text,
+	project_status varchar(100),
+	end_date timestamp,
+	ships_to_country boolean
+)
+AS $$
+BEGIN 
+RETURN QUERY
+WITH X AS 
+(SELECT p.id, p.user_name, p.project_name, p.project_description, m.link, h.project_status, h.end_date,true FROM Projects p INNER JOIN Media m ON m.project_id = p.id INNER JOIN History h ON h.project_id = p.id WHERE m.description = 'about' AND (h.project_id, h.time_stamp) IN (SELECT project_id, MAX(time_stamp) FROM History GROUP BY project_id) AND country_name_in IN (SELECT s.country_name FROM Shipping_info s WHERE s.project_id = p.id) ORDER BY project_name),
+Y AS (
+SELECT p.id, p.user_name, p.project_name, p.project_description, m.link, h.project_status, h.end_date,false FROM Projects p INNER JOIN Media m ON m.project_id = p.id INNER JOIN History h ON h.project_id = p.id WHERE m.description = 'about' AND (h.project_id, h.time_stamp) IN (SELECT project_id, MAX(time_stamp) FROM History GROUP BY project_id)
+EXCEPT
+SELECT p.id, p.user_name, p.project_name, p.project_description, m.link, h.project_status, h.end_date,false FROM Projects p INNER JOIN Media m ON m.project_id = p.id INNER JOIN History h ON h.project_id = p.id WHERE m.description = 'about' AND (h.project_id, h.time_stamp) IN (SELECT project_id, MAX(time_stamp) FROM History GROUP BY project_id) AND country_name_in IN (SELECT s.country_name FROM Shipping_info s WHERE s.project_id = p.id) ORDER BY project_name
+)
+SELECT * FROM X UNION ALL SELECT * FROM Y;
+END; $$ LANGUAGE plpgsql;
+
+CREATE OR REPLACE FUNCTION get_projects_info_by_type(country_name_in varchar(100), type_in varchar(50))
+RETURNS TABLE(
+	id int,
+	user_name varchar(100),
+	project_name text,
+	description text,
+	link text,
+	project_status varchar(100),
+	end_date timestamp,
+	ships_to_country boolean
+)
+AS $$
+BEGIN 
+RETURN QUERY
+WITH X AS 
+(SELECT p.id, p.user_name, p.project_name, p.project_description, m.link, h.project_status, h.end_date,true FROM Projects p INNER JOIN Media m ON m.project_id = p.id INNER JOIN History h ON h.project_id = p.id WHERE m.description = 'about' AND p.project_type = type_in AND (h.project_id, h.time_stamp) IN (SELECT project_id, MAX(time_stamp) FROM History GROUP BY project_id) AND country_name_in IN (SELECT s.country_name FROM Shipping_info s WHERE s.project_id = p.id) ORDER BY project_name),
+Y AS (
+SELECT p.id, p.user_name, p.project_name, p.project_description, m.link, h.project_status, h.end_date,false FROM Projects p INNER JOIN Media m ON m.project_id = p.id INNER JOIN History h ON h.project_id = p.id WHERE m.description = 'about' AND p.project_type = type_in AND (h.project_id, h.time_stamp) IN (SELECT project_id, MAX(time_stamp) FROM History GROUP BY project_id)
+EXCEPT
+SELECT p.id, p.user_name, p.project_name, p.project_description, m.link, h.project_status, h.end_date,false FROM Projects p INNER JOIN Media m ON m.project_id = p.id INNER JOIN History h ON h.project_id = p.id WHERE m.description = 'about' AND p.project_type = type_in AND (h.project_id, h.time_stamp) IN (SELECT project_id, MAX(time_stamp) FROM History GROUP BY project_id) AND country_name_in IN (SELECT s.country_name FROM Shipping_info s WHERE s.project_id = p.id) ORDER BY project_name
+)
+SELECT * FROM X UNION ALL SELECT * FROM Y;
+END; $$ LANGUAGE plpgsql;
+
+CREATE OR REPLACE FUNCTION get_projects_info_by_tags(country_name_in varchar(100), tag varchar(50))
+RETURNS TABLE(
+	id int,
+	user_name varchar(100),
+	project_name text,
+	description text,
+	link text,
+	project_status varchar(100),
+	end_date timestamp,
+	ships_to_country boolean
+)
+AS $$
+BEGIN 
+RETURN QUERY
+WITH X AS 
+(SELECT p.id, p.user_name, p.project_name, p.project_description, m.link, h.project_status, h.end_date,true FROM Projects p INNER JOIN Media m ON m.project_id = p.id INNER JOIN History h ON h.project_id = p.id INNER JOIN Tags t ON t.project_id = p.id WHERE m.description = 'about' AND (h.project_id, h.time_stamp) IN (SELECT project_id, MAX(time_stamp) FROM History GROUP BY project_id) AND country_name_in IN (SELECT s.country_name FROM Shipping_info s WHERE s.project_id = p.id) AND t.tag_name = tag ORDER BY project_name),
+Y AS (
+SELECT p.id, p.user_name, p.project_name, p.project_description, m.link, h.project_status, h.end_date,false FROM Projects p INNER JOIN Media m ON m.project_id = p.id INNER JOIN History h ON h.project_id = p.id INNER JOIN Tags t ON t.project_id = p.id WHERE m.description = 'about' AND (h.project_id, h.time_stamp) IN (SELECT project_id, MAX(time_stamp) FROM History GROUP BY project_id) AND t.tag_name = tag
+EXCEPT
+SELECT p.id, p.user_name, p.project_name, p.project_description, m.link, h.project_status, h.end_date,true FROM Projects p INNER JOIN Media m ON m.project_id = p.id INNER JOIN History h ON h.project_id = p.id INNER JOIN Tags t ON t.project_id = p.id WHERE m.description = 'about' AND (h.project_id, h.time_stamp) IN (SELECT project_id, MAX(time_stamp) FROM History GROUP BY project_id) AND country_name_in IN (SELECT s.country_name FROM Shipping_info s WHERE s.project_id = p.id) AND t.tag_name = tag ORDER BY project_name
+)
+SELECT * FROM X UNION ALL SELECT * FROM Y;
+END; $$ LANGUAGE plpgsql;
 
 CREATE TRIGGER valid_pledge
 BEFORE INSERT ON Pledges
