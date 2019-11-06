@@ -314,6 +314,14 @@ test for extended enddate
 INSERT INTO History VALUES (0003, 'Ongoing', '2020-10-01 00:00:01', 3000, CURRENT_TIMESTAMP);
 INSERT INTO History VALUES (0004, 'Ongoing', '2020-10-01 00:00:01', 3000, CURRENT_TIMESTAMP);
 INSERT INTO History VALUES (0003, 'Ongoing', '2020-10-01 00:00:01', 1000, CURRENT_TIMESTAMP);
+/*
+For completed projects
+*/
+INSERT INTO history (project_id, project_status, end_date, goal, time_stamp) VALUES(1, 'success', '2020-05-01 00:00:01.000', 1000, '2019-12-06 02:42:55.000');
+INSERT INTO history (project_id, project_status, end_date, goal, time_stamp) VALUES(2, 'success', '2020-05-01 00:00:01.000', 2000, '2019-12-06 02:42:55.000');
+INSERT INTO history (project_id, project_status, end_date, goal, time_stamp) VALUES(3, 'success', '2020-05-01 00:00:01.000', 3000, '2019-12-06 02:42:55.000');
+INSERT INTO history (project_id, project_status, end_date, goal, time_stamp) VALUES(4, 'success', '2020-05-01 00:00:01.000', 4000, '2019-12-06 02:42:55.000');
+INSERT INTO history (project_id, project_status, end_date, goal, time_stamp) VALUES(5, 'success', '2020-05-01 00:00:01.000', 5000, '2019-12-06 02:42:55.000');
 
 
 INSERT INTO Comments VALUES (0001, 'HirakawaDaichi', 'xxx', '2019-03-01 00:00:01');
@@ -396,18 +404,22 @@ INSERT INTO Tags VALUES ('SirStamfordRaffles', 0006, 'ddd');
 INSERT INTO Tags VALUES ('SirStamfordRaffles', 0007, 'eee');
 INSERT INTO Tags VALUES ('SirStamfordRaffles', 0008, 'fff');
 -- Auto-generated SQL script #201911060307
-INSERT INTO public.tags (user_name,project_id,tag_name)
+INSERT INTO tags (user_name,project_id,tag_name)
 	VALUES ('MarieAntoinette',1,'xxx');
-INSERT INTO public.tags (user_name,project_id,tag_name)
+INSERT INTO tags (user_name,project_id,tag_name)
 	VALUES ('SirStamfordRaffles',1,'yyy');
-INSERT INTO public.tags (user_name,project_id,tag_name)
+INSERT INTO tags (user_name,project_id,tag_name)
 	VALUES ('ONobunaga',2,'zzz');
 INSERT INTO public.tags (user_name,project_id,tag_name)
 	VALUES ('Scientist',3,'aaa');
-INSERT INTO public.tags (user_name,project_id,tag_name)
+INSERT INTO tags (user_name,project_id,tag_name)
 	VALUES ('SirWinstonChurchhill',4,'bbb');
 INSERT INTO public.tags (user_name,project_id,tag_name)
 	VALUES ('FounderFather',5,'ccc');
+INSERT INTO tags (user_name, project_id, tag_name) VALUES('Scientist', 1, 'aaa');
+INSERT INTO tags (user_name, project_id, tag_name) VALUES('Scientist', 1, 'bbb');
+INSERT INTO tags (user_name, project_id, tag_name) VALUES('Scientist', 1, 'ccc');
+INSERT INTO tags (user_name, project_id, tag_name) VALUES('Scientist', 1, 'ddd');
 
 /*
 INSERT INTO Currency VALUES ('SGD','Singapore');
