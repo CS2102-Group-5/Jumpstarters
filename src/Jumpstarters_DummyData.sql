@@ -338,11 +338,20 @@ INSERT INTO Comments VALUES (0001, 'HirakawaDaichi', 'zzz', '2019-03-03 00:00:01
 /*INSERT INTO Media VALUES (0001, 'ma', 'da', 'linka');*/
 INSERT INTO Media VALUES (0001, 'video', 'main', 'https://www.youtube.com/embed/L3h828EtWoA');
 INSERT INTO Media VALUES (0001, 'image', 'about', 'https://systweak1.vo.llnwd.net/content/wp/systweakblogsnew/uploads_new/2018/09/Twitter.png');
-INSERT INTO Media VALUES (0002, 'mb', 'db', 'linkb');
-INSERT INTO Media VALUES (0003, 'image', 'about', 'https://cdn57.androidauthority.net/wp-content/uploads/2017/07/Swipe-for-Facebook-screenshot-2017-840x472.jpg');
-INSERT INTO Media VALUES (0005, 'image', 'about', 'https://www.geek.com/wp-content/uploads/2019/05/Instagram-Direct-51619-625x352.jpg');
-INSERT INTO Media VALUES (0005, 'ma', 'de', 'linke');
-INSERT INTO Media VALUES (0006, 'mb', 'df', 'linkb');
+INSERT INTO Media VALUES (0002, 'video', 'main', 'https://www.youtube.com/embed/L3h828EtWoA');
+INSERT INTO Media VALUES (0002, 'image', 'about', 'https://systweak1.vo.llnwd.net/content/wp/systweakblogsnew/uploads_new/2018/09/Twitter.png');
+INSERT INTO Media VALUES (0003, 'video', 'main', 'https://www.youtube.com/embed/L3h828EtWoA');
+INSERT INTO Media VALUES (0003, 'image', 'about', 'https://systweak1.vo.llnwd.net/content/wp/systweakblogsnew/uploads_new/2018/09/Twitter.png');
+INSERT INTO Media VALUES (0004, 'video', 'main', 'https://www.youtube.com/embed/L3h828EtWoA');
+INSERT INTO Media VALUES (0004, 'image', 'about', 'https://systweak1.vo.llnwd.net/content/wp/systweakblogsnew/uploads_new/2018/09/Twitter.png');
+INSERT INTO Media VALUES (0005, 'video', 'main', 'https://www.youtube.com/embed/L3h828EtWoA');
+INSERT INTO Media VALUES (0005, 'image', 'about', 'https://systweak1.vo.llnwd.net/content/wp/systweakblogsnew/uploads_new/2018/09/Twitter.png');
+INSERT INTO Media VALUES (0006, 'video', 'main', 'https://www.youtube.com/embed/L3h828EtWoA');
+INSERT INTO Media VALUES (0006, 'image', 'about', 'https://systweak1.vo.llnwd.net/content/wp/systweakblogsnew/uploads_new/2018/09/Twitter.png');
+INSERT INTO Media VALUES (0007, 'video', 'main', 'https://www.youtube.com/embed/L3h828EtWoA');
+INSERT INTO Media VALUES (0007, 'image', 'about', 'https://systweak1.vo.llnwd.net/content/wp/systweakblogsnew/uploads_new/2018/09/Twitter.png');
+INSERT INTO Media VALUES (0008, 'video', 'main', 'https://www.youtube.com/embed/L3h828EtWoA');
+INSERT INTO Media VALUES (0008, 'image', 'about', 'https://systweak1.vo.llnwd.net/content/wp/systweakblogsnew/uploads_new/2018/09/Twitter.png');
 
 INSERT INTO Shipping_info VALUES (0001, 'United Kingdom', CURRENT_TIMESTAMP);
 INSERT INTO Shipping_info VALUES (0001, 'Japan', CURRENT_TIMESTAMP);
