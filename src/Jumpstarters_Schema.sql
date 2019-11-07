@@ -20,7 +20,7 @@ DROP TRIGGER IF EXISTS pledge_funder_check;
 DROP TRIGGER IF EXISTS pledge_date_check;
 DROP TRIGGER IF EXISTS suspend_trig;
 DROP TRIGGER IF EXISTS valid_pledge;
-
+DROP TRIGGER IF EXISTS "Non-trivial constraint 1" ON shipping_info;
 
 DROP FUNCTION IF EXISTS currency_check();
 DROP FUNCTION IF EXISTS shipping_check();
@@ -33,6 +33,8 @@ DROP FUNCTION IF EXISTS check_valid_pledge();
 DROP FUNCTION IF EXISTS get_projects_info(varchar(100));
 DROP FUNCTION IF EXISTS get_projects_info_by_type(varchar(100),varchar(50));
 DROP FUNCTION IF EXISTS get_projects_info_by_tags(varchar(100),varchar(50));
+DROP FUNCTION IF EXISTS 
+shippingDestRemoval_check()
 
 DROP PROCEDURE IF EXISTS cancel_project(int);
 DROP PROCEDURE IF EXISTS create_new_creator(text,text,text,text,text,text);
@@ -336,6 +338,33 @@ INSERT INTO UserAccount VALUES(user_name, name, email, country_name, password, '
 INSERT INTO Funder VALUES(user_name, preferences);
 END $$ LANGUAGE plpgsql;
 
+CREATE OR REPLACE FUNCTION "shippingDestRemoval_check"()
+ RETURNS trigger
+ LANGUAGE plpgsql
+AS $function$
+DECLARE count NUMERIC;
+	begin --The Creator cannot remove a shipping destination if there are funders which pledged to the project from that country
+		--First, find out if there are funders which pledged to the project from that country
+		select count(*) into count from shipping_info si
+		inner join projects project on (project.id = si.project_id)
+		inner join pledges pledges on (si.project_id = pledges.project_id)
+		inner join funder funder on (pledges.user_name = funder.user_name)
+		inner join useraccount useraccount on (funder.user_name = useraccount.user_name)
+		where (useraccount.country_name = old.country_name) and (project.id = old.project_id);
+		if count > 0 then
+			raise notice 'Cannot remove shipping destination as there are pledges to the project from that country.';
+			return null;
+		elsif (TG_OP = 'DELETE') then
+			raise notice 'Shipping dest removed';
+			return old;
+		elsif (TG_OP = 'UPDATE') then
+			raise notice 'Shipping dest updated';
+			return new;
+		end if;
+	END;
+$function$
+;
+
 CREATE TRIGGER currency_trig
 BEFORE INSERT OR UPDATE ON CurrencyPair
 FOR EACH ROW EXECUTE PROCEDURE currency_check();
@@ -347,3 +376,7 @@ FOR EACH ROW EXECUTE PROCEDURE admin_check();
 CREATE TRIGGER valid_pledge
 BEFORE INSERT ON Pledges
 FOR EACH ROW EXECUTE PROCEDURE check_valid_pledge();
+
+create trigger "Non-trivial constraint 1" before
+delete or update on
+public.shipping_info for each row execute procedure "shippingDestRemoval_check"();
