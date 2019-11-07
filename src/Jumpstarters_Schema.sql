@@ -14,18 +14,16 @@ DROP TABLE IF EXISTS Tags CASCADE;
 DROP TABLE IF EXISTS Currency CASCADE;
 DROP TABLE IF EXISTS CurrencyPair CASCADE;
 
-DROP TRIGGER IF EXISTS currency_trig;
-DROP TRIGGER IF EXISTS pledge_insert;
-DROP TRIGGER IF EXISTS pledge_funder_check;
-DROP TRIGGER IF EXISTS pledge_date_check;
-DROP TRIGGER IF EXISTS suspend_trig;
-DROP TRIGGER IF EXISTS valid_pledge;
+DROP TRIGGER IF EXISTS currency_trig ON CurrencyPair;
+DROP TRIGGER IF EXISTS check_valid_pledge ON Pledges;
+DROP TRIGGER IF EXISTS suspend_trig ON Pledges;
+DROP TRIGGER IF EXISTS valid_pledge ON Pledges;
+DROP TRIGGER IF EXISTS check_creator_rates ON Rates;
+DROP TRIGGER IF EXISTS check_creator_follows ON Follows;
 DROP TRIGGER IF EXISTS "Non-trivial constraint 1" ON shipping_info;
 
+
 DROP FUNCTION IF EXISTS currency_check();
-DROP FUNCTION IF EXISTS shipping_check();
-DROP FUNCTION IF EXISTS funder_check();
-DROP FUNCTION IF EXISTS date_check();
 DROP FUNCTION IF EXISTS admin_check();
 DROP FUNCTION IF EXISTS count_occurances(text,text,text,varchar(50));
 DROP FUNCTION IF EXISTS add(numeric,numeric,numeric,numeric);
@@ -33,8 +31,9 @@ DROP FUNCTION IF EXISTS check_valid_pledge();
 DROP FUNCTION IF EXISTS get_projects_info(varchar(100));
 DROP FUNCTION IF EXISTS get_projects_info_by_type(varchar(100),varchar(50));
 DROP FUNCTION IF EXISTS get_projects_info_by_tags(varchar(100),varchar(50));
-DROP FUNCTION IF EXISTS 
-shippingDestRemoval_check()
+DROP FUNCTION IF EXISTS check_follows_creator();
+DROP FUNCTION IF EXISTS check_rates_creator();
+DROP FUNCTION IF EXISTS shippingDestRemoval_check();
 
 DROP PROCEDURE IF EXISTS cancel_project(int);
 DROP PROCEDURE IF EXISTS create_new_creator(text,text,text,text,text,text);
@@ -64,7 +63,7 @@ CREATE TABLE Creator (
 
 CREATE TABLE Funder (
 	user_name varchar(100) PRIMARY KEY REFERENCES UserAccount (user_name) ON DELETE CASCADE,
-	preferences varchar(100) ARRAY
+	preferences varchar(50) ARRAY
 );
 
 CREATE TABLE Admin (
@@ -241,6 +240,39 @@ BEGIN
 END; $$
 LANGUAGE plpgsql;
 
+CREATE OR REPLACE FUNCTION check_follows_creator()
+RETURNS TRIGGER AS
+$$ DECLARE is_creator boolean;
+BEGIN SELECT true INTO is_creator FROM Projects p WHERE p.user_name = NEW.funder AND p.id = NEW.projects_followed;
+IF is_creator THEN
+	RAISE EXCEPTION 'Creator cannot perform action';
+	RETURN NULL;
+ELSE RETURN NEW;
+END IF;
+END $$ LANGUAGE plpgsql;
+
+CREATE OR REPLACE FUNCTION check_rates_creator()
+RETURNS TRIGGER AS
+$$ DECLARE is_creator boolean;
+BEGIN SELECT true INTO is_creator FROM Projects p WHERE p.user_name = NEW.user_name AND p.id = NEW.project_id;
+IF is_creator THEN
+	RAISE EXCEPTION 'Creator cannot perform action';
+	RETURN NULL;
+ELSE RETURN NEW;
+END IF;
+END $$ LANGUAGE plpgsql;
+
+CREATE OR REPLACE FUNCTION check_valid_cancel_pledge()
+RETURNS TRIGGER AS 
+$$ DECLARE is_valid boolean;
+BEGIN SELECT true INTO is_valid FROM Projects p INNER JOIN History h ON h.project_id = p.id WHERE h.project_status = 'Ongoing' AND OLD.project_id = h.project_id AND (h.project_id,h.time_stamp) IN (SELECT project_id, MAX(time_stamp) FROM History GROUP BY project_id);
+IF is_valid THEN
+	RETURN OLD;
+ELSE RAISE EXCEPTION 'Cannot cancel pledge as project is closed';
+END IF;
+END; $$ LANGUAGE plpgsql;
+
+
 CREATE OR REPLACE FUNCTION get_projects_info(country_name_in varchar(100))
 RETURNS TABLE(
 	id int,
@@ -313,31 +345,6 @@ SELECT p.id, p.user_name, p.project_name, p.project_description, m.link, h.proje
 SELECT * FROM X UNION ALL SELECT * FROM Y;
 END; $$ LANGUAGE plpgsql;
 
-CREATE OR REPLACE PROCEDURE cancel_project(id int)
-AS $$ 
-BEGIN 
-WITH X AS
-(SELECT end_date, goal, project_id FROM History WHERE project_id = id AND (id,time_stamp) IN (SELECT project_id, MAX(time_stamp) FROM History GROUP BY project_id))
-INSERT INTO History VALUES(id,
-	CASE WHEN (SELECT true FROM pledges p INNER JOIN X on X.project_id = p.project_id GROUP BY X.goal HAVING X.goal <= SUM(p.pledge)) THEN 'Success' WHEN (SELECT true FROM pledges p INNER JOIN X on X.project_id = p.project_id GROUP BY X.goal HAVING X.goal > SUM(p.pledge)) THEN 'Completed' END
-	,(SELECT end_date FROM X),(SELECT goal FROM X),CURRENT_TIMESTAMP);
-END $$ LANGUAGE plpgsql;
-
-CREATE OR REPLACE PROCEDURE create_new_creator(user_name text, name text, email text, country_name text, password text, organization text)
-AS $$ 
-BEGIN 
-INSERT INTO UserAccount VALUES(user_name, name, email, country_name, password, 'false', CURRENT_TIMESTAMP);
-INSERT INTO Creator VALUES(user_name, organization);
-INSERT INTO Funder VALUES(user_name);
-END $$ LANGUAGE plpgsql;
-
-CREATE OR REPLACE PROCEDURE create_new_funder(user_name varchar(100), name varchar(50), email varchar(100), country_name varchar(100), password varchar(50), preferences varchar(100) ARRAY)
-AS $$
-BEGIN 
-INSERT INTO UserAccount VALUES(user_name, name, email, country_name, password, 'false', CURRENT_TIMESTAMP);
-INSERT INTO Funder VALUES(user_name, preferences);
-END $$ LANGUAGE plpgsql;
-
 CREATE OR REPLACE FUNCTION "shippingDestRemoval_check"()
  RETURNS trigger
  LANGUAGE plpgsql
@@ -365,6 +372,31 @@ DECLARE count NUMERIC;
 $function$
 ;
 
+CREATE OR REPLACE PROCEDURE cancel_project(id int)
+AS $$ 
+BEGIN WITH X AS (
+SELECT end_date, goal, project_id FROM History WHERE project_id = id AND (id,time_stamp) IN (SELECT project_id, MAX(time_stamp) FROM History GROUP BY project_id)
+), Y AS (SELECT COALESCE(SUM(pledge),0) AS pledge FROM Pledges WHERE project_id = id)
+INSERT INTO History VALUES(id,
+	CASE WHEN ((SELECT goal FROM X) <= (SELECT pledge FROM Y)) THEN 'Successful' ELSE 'Unsuccessful' END
+	,(SELECT end_date FROM X),(SELECT goal FROM X),CURRENT_TIMESTAMP);
+END $$ LANGUAGE plpgsql;
+
+CREATE OR REPLACE PROCEDURE create_new_creator(user_name text, name text, email text, country_name text, password text, organization text)
+AS $$ 
+BEGIN 
+INSERT INTO UserAccount VALUES(user_name, name, email, country_name, password, 'false', CURRENT_TIMESTAMP);
+INSERT INTO Creator VALUES(user_name, organization);
+INSERT INTO Funder VALUES(user_name);
+END $$ LANGUAGE plpgsql;
+
+CREATE OR REPLACE PROCEDURE create_new_funder(user_name varchar(100), name varchar(50), email varchar(100), country_name varchar(100), password varchar(50), preferences varchar(100) ARRAY)
+AS $$
+BEGIN 
+INSERT INTO UserAccount VALUES(user_name, name, email, country_name, password, 'false', CURRENT_TIMESTAMP);
+INSERT INTO Funder VALUES(user_name, preferences);
+END $$ LANGUAGE plpgsql;
+
 CREATE TRIGGER currency_trig
 BEFORE INSERT OR UPDATE ON CurrencyPair
 FOR EACH ROW EXECUTE PROCEDURE currency_check();
@@ -377,6 +409,18 @@ CREATE TRIGGER valid_pledge
 BEFORE INSERT ON Pledges
 FOR EACH ROW EXECUTE PROCEDURE check_valid_pledge();
 
-create trigger "Non-trivial constraint 1" before
+CREATE TRIGGER check_valid_cancel_pledge
+BEFORE DELETE ON Pledges
+FOR EACH ROW EXECUTE PROCEDURE check_valid_cancel_pledge();
+
+CREATE TRIGGER check_creator_rates
+BEFORE INSERT OR UPDATE ON Rates
+FOR EACH ROW EXECUTE PROCEDURE check_rates_creator();
+
+CREATE TRIGGER check_creator_follows
+BEFORE INSERT OR UPDATE ON Follows
+FOR EACH ROW EXECUTE PROCEDURE check_follows_creator();
+
+CREATE TRIGGER "Non-trivial constraint 1" before
 delete or update on
 public.shipping_info for each row execute procedure "shippingDestRemoval_check"();
