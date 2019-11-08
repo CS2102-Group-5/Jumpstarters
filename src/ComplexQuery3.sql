@@ -5,16 +5,14 @@ Has at least 15 of creators under the organization
 The unique countries which the projects under the organization ships to is at least 5 countries.
 **/
 with orgsCountry as (
-	select c.organization, SI.country_name from creator c --
-	INNER JOIN Tags t ON (c.user_name = t.user_name)
-	INNER JOIN Projects p ON (t.project_id = p.id)
+	select c.organization, SI.country_name from creator c
+	INNER JOIN Projects p ON (c.user_name = p.user_name)
 	inner join shipping_info SI on (p.id = SI.project_id)
 	where c.organization is not null
 	group by c.organization, SI.country_name
 )
 SELECT c.organization FROM Creator c -- extract only c.organization at the end
-INNER JOIN Tags ON (c.user_name = Tags.user_name)
-INNER JOIN Projects ON (Tags.project_id = Projects.id)
+INNER JOIN Projects ON (c.user_name = Projects.user_name)
 INNER JOIN History ON (Projects.id = History.project_id)
 WHERE History.project_status = 'success' and c.Organization is not null -- filer successfuls and lone wolves
 GROUP BY c.Organization
