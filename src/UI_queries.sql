@@ -189,7 +189,12 @@ Insert for funder
         sql = sql + "]);"
 
 ---------------------------------------------------------------------------------------------------------------------------------
+/*Search Query*/
 
+SELECT * FROM (SELECT id, count_occurances($substring, project_description, project_name, user_name) AS rank, project_name FROM projects) AS a WHERE rank > 0 ORDER BY rank DESC, project_name;
+
+
+---------------------------------------------------------------------------------------------------------------------------------
 
 /*
 Complex Query
