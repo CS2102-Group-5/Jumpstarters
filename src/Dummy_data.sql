@@ -2484,6 +2484,22 @@ INSERT INTO Creator VALUES
     ('adoxey6w','Zava'),
     ('psarjeant6x','Zava');
 
+INSERT INTO creator (user_name, organization) VALUES('S1', 'Academia');
+INSERT INTO creator (user_name, organization) VALUES('S2', 'Academia');
+INSERT INTO creator (user_name, organization) VALUES('S3', 'Academia');
+INSERT INTO creator (user_name, organization) VALUES('S4', 'Academia');
+INSERT INTO creator (user_name, organization) VALUES('S5', 'Academia');
+INSERT INTO creator (user_name, organization) VALUES('S6', 'Academia');
+INSERT INTO creator (user_name, organization) VALUES('S7', 'Academia');
+INSERT INTO creator (user_name, organization) VALUES('S8', 'Academia');
+INSERT INTO creator (user_name, organization) VALUES('S9', 'Academia');
+INSERT INTO creator (user_name, organization) VALUES('S10', 'Academia');
+INSERT INTO creator (user_name, organization) VALUES('S11', 'Academia');
+INSERT INTO creator (user_name, organization) VALUES('S12', 'Academia');
+INSERT INTO creator (user_name, organization) VALUES('S13', 'Academia');
+INSERT INTO creator (user_name, organization) VALUES('S14', 'Academia');
+INSERT INTO creator (user_name, organization) VALUES('S15', 'Academia');
+INSERT INTO creator (user_name, organization) VALUES('S16', 'Academia');
 
 INSERT INTO Admin VALUES
     ('nscotlandqe'),
@@ -9304,6 +9320,8 @@ INSERT INTO Projects VALUES (0005, 'MarieAntoinette', 'Art Gallery Launch', 'Art
 INSERT INTO Projects VALUES (0006, 'ONobunaga', 'New Fireworks Product', 'Food & Craft','', 'Japan', '2019-01-01 00:00:01', 0);
 INSERT INTO Projects VALUES (0007, 'Scientist', 'Research Project Z', 'Design & Tech','', 'Germany', '2019-01-01 00:00:01', 0);
 INSERT INTO Projects VALUES (0008, 'SirStamfordRaffles', 'Animal Book', 'Publishing','', 'Singapore', '2019-01-01 00:00:01', 0);
+INSERT INTO projects (id, user_name, project_name, project_type, project_description, project_location, start_date, num_of_views) VALUES(9, 'Scientist', 'Research Project Z', 'Design & Tech', '', 'Germany', '2019-01-01 00:00:01.000', 0);
+INSERT INTO projects (id, user_name, project_name, project_type, project_description, project_location, start_date, num_of_views) VALUES(10, 'Scientist', 'Research Project Z', 'Design & Tech', '', 'Germany', '2019-01-01 00:00:01.000', 0);
 
 INSERT INTO History VALUES (0001, 'Ongoing', '2020-05-01 00:00:01', 1000, CURRENT_TIMESTAMP);
 INSERT INTO History VALUES (0002, 'Ongoing', '2020-05-01 00:00:01', 2000, CURRENT_TIMESTAMP);
@@ -9322,6 +9340,15 @@ test for extended enddate
 INSERT INTO History VALUES (0003, 'Ongoing', '2020-10-01 00:00:01', 3000, CURRENT_TIMESTAMP);
 INSERT INTO History VALUES (0004, 'Ongoing', '2020-10-01 00:00:01', 3000, CURRENT_TIMESTAMP);
 INSERT INTO History VALUES (0003, 'Ongoing', '2020-10-01 00:00:01', 1000, CURRENT_TIMESTAMP);
+
+INSERT INTO history (project_id, project_status, end_date, goal, time_stamp) VALUES(1, 'success', '2020-05-01 00:00:01.000', 1000, '2019-12-06 02:42:55.000');
+INSERT INTO history (project_id, project_status, end_date, goal, time_stamp) VALUES(2, 'success', '2020-05-01 00:00:01.000', 2000, '2019-12-06 02:42:55.000');
+INSERT INTO history (project_id, project_status, end_date, goal, time_stamp) VALUES(3, 'success', '2020-05-01 00:00:01.000', 3000, '2019-12-06 02:42:55.000');
+INSERT INTO history (project_id, project_status, end_date, goal, time_stamp) VALUES(4, 'success', '2020-05-01 00:00:01.000', 4000, '2019-12-06 02:42:55.000');
+INSERT INTO history (project_id, project_status, end_date, goal, time_stamp) VALUES(5, 'success', '2020-05-01 00:00:01.000', 5000, '2019-12-06 02:42:55.000');
+INSERT INTO history (project_id, project_status, end_date, goal, time_stamp) VALUES(7, 'success', '2020-05-01 00:00:01.000', 5000, '2019-12-06 02:42:55.000');
+INSERT INTO history (project_id, project_status, end_date, goal, time_stamp) VALUES(9, 'success', '2020-05-01 00:00:01.000', 5000, '2019-12-06 02:42:55.000');
+INSERT INTO history (project_id, project_status, end_date, goal, time_stamp) VALUES(10, 'success', '2020-05-01 00:00:01.000', 5000, '2019-12-06 02:42:55.000');
 
 INSERT INTO Comments VALUES (0001, 'HirakawaDaichi', 'xxx', '2019-03-01 00:00:01');
 INSERT INTO Comments VALUES (0001, 'Scientist', 'yyy', '2019-03-02 00:00:01');
