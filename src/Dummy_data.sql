@@ -3209,8 +3209,8 @@ INSERT INTO History VALUES
     (48,'Ongoing','2020-06-10 15:50:11',2800,'2020-05-12 15:50:11'),
     (49,'Ongoing','2020-09-01 09:24:23',500,'2020-08-03 09:24:23'),
     (50,'Ongoing','2020-07-31 14:03:47',1600,'2020-07-02 14:03:47'),
-    (51,'Ongoing','2020-05-15 08:39:32',700,'2020-04-16 08:39:32'),
-    (52,'Ongoing','2020-03-06 06:13:30',5000,'2020-02-05 06:13:30'),
+    (51,'Ongoing','2019-05-15 08:39:32',700,'2019-04-16 08:39:32'),
+    (52,'Ongoing','2019-03-06 06:13:30',5000,'2019-02-05 06:13:30'),
     (53,'Ongoing','2020-06-02 15:17:34',500,'2020-05-04 15:17:34'),
     (54,'Ongoing','2020-10-21 16:49:25',5000,'2020-09-22 16:49:25'),
     (55,'Ongoing','2020-05-31 05:26:22',1200,'2020-05-02 05:26:22'),
@@ -3226,10 +3226,10 @@ INSERT INTO History VALUES
     (65,'Ongoing','2020-04-25 07:52:11',1000,'2020-03-27 07:52:11'),
     (66,'Ongoing','2020-11-13 19:03:08',1200,'2020-10-15 19:03:08'),
     (67,'Ongoing','2020-08-05 01:11:28',2800,'2020-07-07 01:11:28'),
-    (68,'Ongoing','2020-04-25 07:52:11',1800,'2020-03-27 07:52:11'),
+    (68,'Ongoing','2019-04-25 07:52:11',1800,'2019-03-27 07:52:11'),
     (69,'Ongoing','2019-12-27 18:28:07',600,'2019-11-28 18:28:07'),
     (70,'Ongoing','2020-08-17 08:12:42',6000,'2020-07-19 08:12:42'),
-    (71,'Ongoing','2020-03-12 15:45:08',700,'2020-02-11 15:45:08'),
+    (71,'Ongoing','2019-03-12 15:45:08',700,'2019-02-11 15:45:08'),
     (72,'Ongoing','2020-06-14 22:37:16',4500,'2020-05-16 22:37:16'),
     (73,'Ongoing','2020-12-01 10:40:45',600,'2020-11-02 10:40:45'),
     (74,'Ongoing','2020-03-07 12:02:05',7000,'2020-02-06 12:02:05'),
@@ -3237,7 +3237,7 @@ INSERT INTO History VALUES
     (76,'Ongoing','2020-09-11 06:39:55',1200,'2020-08-13 06:39:55'),
     (77,'Ongoing','2020-03-30 00:30:31',1000,'2020-03-01 00:30:31'),
     (78,'Ongoing','2019-12-05 00:57:03',6000,'2019-11-06 00:57:03'),
-    (79,'Ongoing','2020-04-18 10:51:00',5000,'2020-03-20 10:51:00'),
+    (79,'Ongoing','2019-04-18 10:51:00',5000,'2019-03-20 10:51:00'),
     (80,'Ongoing','2020-05-06 07:50:00',2400,'2020-04-07 07:50:00'),
     (81,'Ongoing','2020-09-15 00:38:02',6000,'2020-08-17 00:38:02'),
     (82,'Ongoing','2020-10-30 17:25:38',6000,'2020-10-01 17:25:38'),
@@ -3245,19 +3245,19 @@ INSERT INTO History VALUES
     (84,'Ongoing','2020-09-09 12:34:13',5000,'2020-08-11 12:34:13'),
     (85,'Ongoing','2020-05-31 05:26:22',1400,'2020-05-02 05:26:22'),
     (86,'Ongoing','2020-09-28 19:15:24',3200,'2020-08-30 19:15:24'),
-    (87,'Ongoing','2020-09-25 17:48:00',3600,'2020-08-27 17:48:00'),
+    (87,'Ongoing','2019-09-25 17:48:00',3600,'2019-08-27 17:48:00'),
     (88,'Ongoing','2020-01-16 08:38:07',800,'2019-12-18 08:38:07'),
     (89,'Ongoing','2020-10-09 14:44:42',2800,'2020-09-10 14:44:42'),
     (90,'Ongoing','2020-09-03 12:39:35',900,'2020-08-05 12:39:35'),
     (91,'Ongoing','2020-10-21 16:49:25',4500,'2020-09-22 16:49:25'),
     (92,'Ongoing','2020-03-20 19:30:55',3200,'2020-02-19 19:30:55'),
     (93,'Ongoing','2020-07-12 01:13:50',2400,'2020-06-13 01:13:50'),
-    (94,'Ongoing','2020-04-17 10:48:22',4000,'2020-03-19 10:48:22'),
+    (94,'Ongoing','2019-04-17 10:48:22',4000,'2019-03-19 10:48:22'),
     (95,'Ongoing','2019-12-09 21:20:55',1000,'2019-11-10 21:20:55'),
     (96,'Ongoing','2020-04-16 12:37:39',2400,'2020-03-18 12:37:39'),
     (97,'Ongoing','2020-11-19 14:23:00',6000,'2020-10-21 14:23:00'),
     (98,'Ongoing','2020-08-08 03:17:30',3200,'2020-07-10 03:17:30'),
-    (99,'Ongoing','2020-06-04 10:44:58',700,'2020-05-06 10:44:58'),
+    (99,'Ongoing','2019-06-04 10:44:58',700,'2019-05-06 10:44:58'),
     (100,'Ongoing','2020-11-14 12:23:51',3600,'2020-10-16 12:23:51'),
     (101,'Ongoing','2020-09-30 15:22:44',7000,'2020-09-01 15:22:44'),
     (102,'Ongoing','2020-07-20 06:44:12',600,'2020-06-21 06:44:12'),
@@ -3274,7 +3274,7 @@ INSERT INTO History VALUES
     (113,'Ongoing','2020-10-21 21:01:30',700,'2020-09-22 21:01:30'),
     (114,'Ongoing','2020-10-28 12:32:46',4000,'2020-09-29 12:32:46'),
     (115,'Ongoing','2020-02-17 12:39:04',900,'2020-01-19 12:39:04'),
-    (116,'Ongoing','2020-09-18 07:13:38',2800,'2020-08-20 07:13:38'),
+    (116,'Ongoing','2019-09-18 07:13:38',2800,'2019-08-20 07:13:38'),
     (117,'Ongoing','2020-11-14 17:28:54',600,'2020-10-16 17:28:54'),
     (118,'Ongoing','2020-04-20 19:09:20',1000,'2020-03-22 19:09:20'),
     (119,'Ongoing','2020-09-16 17:33:54',600,'2020-08-18 17:33:54'),
@@ -3304,7 +3304,7 @@ INSERT INTO History VALUES
     (143,'Ongoing','2020-06-29 20:47:42',1400,'2020-05-31 20:47:42'),
     (144,'Ongoing','2020-07-29 08:34:39',1800,'2020-06-30 08:34:39'),
     (145,'Ongoing','2020-03-07 12:02:05',1400,'2020-02-06 12:02:05'),
-    (146,'Ongoing','2020-05-12 07:39:48',4500,'2020-04-13 07:39:48'),
+    (146,'Ongoing','2019-05-12 07:39:48',4500,'2019-04-13 07:39:48'),
     (147,'Ongoing','2020-04-07 10:07:23',5000,'2020-03-09 10:07:23'),
     (148,'Ongoing','2020-09-15 00:38:02',400,'2020-08-17 00:38:02'),
     (149,'Ongoing','2019-12-04 14:20:08',600,'2019-11-05 14:20:08'),
@@ -3337,12 +3337,12 @@ INSERT INTO History VALUES
     (176,'Ongoing','2020-11-15 10:49:16',2400,'2020-10-17 10:49:16'),
     (177,'Ongoing','2020-01-18 20:56:37',800,'2019-12-20 20:56:37'),
     (178,'Ongoing','2020-11-22 06:06:13',600,'2020-10-24 06:06:13'),
-    (179,'Ongoing','2020-04-18 10:51:00',400,'2020-03-20 10:51:00'),
+    (179,'Ongoing','2019-04-18 10:51:00',400,'2019-03-20 10:51:00'),
     (180,'Ongoing','2020-11-14 12:23:51',2400,'2020-10-16 12:23:51'),
     (181,'Ongoing','2020-02-04 07:07:39',4000,'2020-01-06 07:07:39'),
     (182,'Ongoing','2020-04-25 10:52:36',900,'2020-03-27 10:52:36'),
     (183,'Ongoing','2019-12-05 00:57:03',5000,'2019-11-06 00:57:03'),
-    (184,'Ongoing','2020-05-28 11:41:37',1000,'2020-04-29 11:41:37'),
+    (184,'Ongoing','2019-05-28 11:41:37',1000,'2019-04-29 11:41:37'),
     (185,'Ongoing','2020-09-28 14:57:51',1400,'2020-08-30 14:57:51'),
     (186,'Ongoing','2020-09-16 17:33:54',2800,'2020-08-18 17:33:54'),
     (187,'Ongoing','2020-09-04 06:18:29',600,'2020-08-06 06:18:29'),
@@ -3352,7 +3352,7 @@ INSERT INTO History VALUES
     (191,'Ongoing','2020-02-11 09:00:27',700,'2020-01-13 09:00:27'),
     (192,'Ongoing','2020-07-30 12:11:46',3200,'2020-07-01 12:11:46'),
     (193,'Ongoing','2020-04-02 11:40:53',1800,'2020-03-04 11:40:53'),
-    (194,'Ongoing','2020-09-04 04:57:22',600,'2020-08-06 04:57:22'),
+    (194,'Ongoing','2019-09-04 04:57:22',600,'2019-08-06 04:57:22'),
     (195,'Ongoing','2020-06-08 02:02:57',1800,'2020-05-10 02:02:57'),
     (196,'Ongoing','2020-03-06 06:13:30',3600,'2020-02-05 06:13:30'),
     (197,'Ongoing','2020-08-07 19:17:16',700,'2020-07-09 19:17:16'),
@@ -9311,7 +9311,6 @@ INSERT INTO CurrencyPair VALUES
     ('THB','USD',0.0329107883),
     ('TRY','USD',0.1737282131);
 
-
 INSERT INTO Projects VALUES (0001, 'Scientist', 'Research Project X', 'Design & Tech', 'This project cures cancer.' ,'Germany', '2019-01-01 00:00:01', 0);
 INSERT INTO Projects VALUES (0002, 'SirWinstonChurchhill', 'Video Broadcast', 'Film', '' ,'United Kingdom', '2019-01-01 00:00:01', 0);
 INSERT INTO Projects VALUES (0003, 'SirStamfordRaffles', 'Plant Biology Book', 'Publishing','', 'Singapore', '2019-01-01 00:00:01', 0);
@@ -9323,23 +9322,42 @@ INSERT INTO Projects VALUES (0008, 'SirStamfordRaffles', 'Animal Book', 'Publish
 INSERT INTO projects (id, user_name, project_name, project_type, project_description, project_location, start_date, num_of_views) VALUES(9, 'Scientist', 'Research Project Z', 'Design & Tech', '', 'Germany', '2019-01-01 00:00:01.000', 0);
 INSERT INTO projects (id, user_name, project_name, project_type, project_description, project_location, start_date, num_of_views) VALUES(10, 'Scientist', 'Research Project Z', 'Design & Tech', '', 'Germany', '2019-01-01 00:00:01.000', 0);
 
-INSERT INTO History VALUES (0001, 'Ongoing', '2020-05-01 00:00:01', 1000, CURRENT_TIMESTAMP);
-INSERT INTO History VALUES (0002, 'Ongoing', '2020-05-01 00:00:01', 2000, CURRENT_TIMESTAMP);
-INSERT INTO History VALUES (0003, 'Ongoing', '2020-05-01 00:00:01', 3000, CURRENT_TIMESTAMP);
-INSERT INTO History VALUES (0004, 'Ongoing', '2020-05-01 00:00:01', 4000, CURRENT_TIMESTAMP);
-INSERT INTO History VALUES (0005, 'Ongoing', '2020-05-01 00:00:01', 5000, CURRENT_TIMESTAMP);
-INSERT INTO History VALUES (0006, 'Ongoing', '2020-05-01 00:00:01', 6000, CURRENT_TIMESTAMP);
-INSERT INTO History VALUES (0007, 'Ongoing', '2020-05-01 00:00:01', 7000, CURRENT_TIMESTAMP);
-INSERT INTO History VALUES (0008, 'Ongoing', '2020-10-01 00:00:01', 1000, CURRENT_TIMESTAMP);
+INSERT INTO Projects VALUES (201, 'Scientist', 'Research Project X', 'Design & Tech', 'This project cures cancer.' ,'Germany', '2019-01-01 00:00:01', 0);
+INSERT INTO Projects VALUES (202, 'SirWinstonChurchhill', 'Video Broadcast', 'Film', '' ,'United Kingdom', '2019-01-01 00:00:01', 0);
+INSERT INTO Projects VALUES (203, 'SirStamfordRaffles', 'Plant Biology Book', 'Publishing','', 'Singapore', '2019-01-01 00:00:01', 0);
+INSERT INTO Projects VALUES (204, 'Scientist', 'Research Project Y', 'Design & Tech','', 'Germany', '2019-01-01 00:00:01', 0);
+INSERT INTO Projects VALUES (205, 'MarieAntoinette', 'Art Gallery Launch', 'Arts','', 'France', '2019-01-01 00:00:01', 0);
+INSERT INTO Projects VALUES (206, 'ONobunaga', 'New Fireworks Product', 'Food & Craft','', 'Japan', '2019-01-01 00:00:01', 0);
+INSERT INTO Projects VALUES (207, 'Scientist', 'Research Project Z', 'Design & Tech','', 'Germany', '2019-01-01 00:00:01', 0);
+INSERT INTO Projects VALUES (208, 'SirStamfordRaffles', 'Animal Book', 'Publishing','', 'Singapore', '2019-01-01 00:00:01', 0);
+
+INSERT INTO History VALUES (201, 'Ongoing', '2020-05-01 00:00:01', 1200, CURRENT_TIMESTAMP);
+INSERT INTO History VALUES (202, 'Ongoing', '2020-05-01 00:00:01', 2200, CURRENT_TIMESTAMP);
+INSERT INTO History VALUES (203, 'Ongoing', '2020-05-01 00:00:01', 3200, CURRENT_TIMESTAMP);
+INSERT INTO History VALUES (204, 'Ongoing', '2020-05-01 00:00:01', 4200, CURRENT_TIMESTAMP);
+INSERT INTO History VALUES (205, 'Ongoing', '2020-05-01 00:00:01', 5200, CURRENT_TIMESTAMP);
+INSERT INTO History VALUES (206, 'Ongoing', '2020-05-01 00:00:01', 6200, CURRENT_TIMESTAMP);
+INSERT INTO History VALUES (207, 'Ongoing', '2020-05-01 00:00:01', 7200, CURRENT_TIMESTAMP);
+INSERT INTO History VALUES (208, 'Ongoing', '2020-10-01 00:00:01', 1200, CURRENT_TIMESTAMP);
 /** Closed means the creator decided to shut down the project prematurely
-INSERT INTO History VALUES (0003, 'Closed', '2019-05-01 00:00:01', 3000, CURRENT_TIMESTAMP);
+INSERT INTO History VALUES (203, 'Closed', '2019-05-01 00:00:01', 320, CURRENT_TIMESTAMP);
 */
 /*
 test for extended enddate
 */
-INSERT INTO History VALUES (0003, 'Ongoing', '2020-10-01 00:00:01', 3000, CURRENT_TIMESTAMP);
-INSERT INTO History VALUES (0004, 'Ongoing', '2020-10-01 00:00:01', 3000, CURRENT_TIMESTAMP);
-INSERT INTO History VALUES (0003, 'Ongoing', '2020-10-01 00:00:01', 1000, CURRENT_TIMESTAMP);
+INSERT INTO History VALUES (203, 'Ongoing', '2020-10-01 00:00:01', 3200, CURRENT_TIMESTAMP);
+INSERT INTO History VALUES (204, 'Ongoing', '2020-10-01 00:00:01', 3200, CURRENT_TIMESTAMP);
+INSERT INTO History VALUES (203, 'Ongoing', '2020-10-01 00:00:01', 1200, CURRENT_TIMESTAMP);
+/*
+For completed projects
+*/
+/**
+INSERT INTO history (project_id, project_status, end_date, goal, time_stamp) VALUES(1, 'Success', '2020-05-01 00:00:01.20', 120, '2019-12-06 02:42:55.20');
+INSERT INTO history (project_id, project_status, end_date, goal, time_stamp) VALUES(2, 'Success', '2020-05-01 00:00:01.20', 220, '2019-12-06 02:42:55.20');
+INSERT INTO history (project_id, project_status, end_date, goal, time_stamp) VALUES(3, 'Success', '2020-05-01 00:00:01.20', 320, '2019-12-06 02:42:55.20');
+INSERT INTO history (project_id, project_status, end_date, goal, time_stamp) VALUES(4, 'Success', '2020-05-01 00:00:01.20', 420, '2019-12-06 02:42:55.20');
+INSERT INTO history (project_id, project_status, end_date, goal, time_stamp) VALUES(5, 'Success', '2020-05-01 00:00:01.20', 520, '2019-12-06 02:42:55.20');
+*/
 
 INSERT INTO history (project_id, project_status, end_date, goal, time_stamp) VALUES(1, 'success', '2020-05-01 00:00:01.000', 1000, '2019-12-06 02:42:55.000');
 INSERT INTO history (project_id, project_status, end_date, goal, time_stamp) VALUES(2, 'success', '2020-05-01 00:00:01.000', 2000, '2019-12-06 02:42:55.000');
@@ -9361,97 +9379,80 @@ INSERT INTO Comments VALUES (0006, 'IvonnePreiss', 'xxx', '2019-03-01 00:00:01')
 INSERT INTO Comments VALUES (0007, 'HenryToh', 'xxx', '2019-03-01 00:00:01');
 INSERT INTO Comments VALUES (0001, 'HirakawaDaichi', 'zzz', '2019-03-03 00:00:01');
 
-/*INSERT INTO Media VALUES (0001, 'ma', 'da', 'linka');*/
-INSERT INTO Media VALUES (0001, 'video', 'main', 'https://www.youtube.com/embed/L3h828EtWoA');
-INSERT INTO Media VALUES (0001, 'image', 'about', 'https://systweak1.vo.llnwd.net/content/wp/systweakblogsnew/uploads_new/2018/09/Twitter.png');
-INSERT INTO Media VALUES (0002, 'video', 'main', 'https://www.youtube.com/embed/L3h828EtWoA');
-INSERT INTO Media VALUES (0002, 'image', 'about', 'https://systweak1.vo.llnwd.net/content/wp/systweakblogsnew/uploads_new/2018/09/Twitter.png');
-INSERT INTO Media VALUES (0003, 'video', 'main', 'https://www.youtube.com/embed/L3h828EtWoA');
-INSERT INTO Media VALUES (0003, 'image', 'about', 'https://systweak1.vo.llnwd.net/content/wp/systweakblogsnew/uploads_new/2018/09/Twitter.png');
-INSERT INTO Media VALUES (0004, 'video', 'main', 'https://www.youtube.com/embed/L3h828EtWoA');
-INSERT INTO Media VALUES (0004, 'image', 'about', 'https://systweak1.vo.llnwd.net/content/wp/systweakblogsnew/uploads_new/2018/09/Twitter.png');
-INSERT INTO Media VALUES (0005, 'video', 'main', 'https://www.youtube.com/embed/L3h828EtWoA');
-INSERT INTO Media VALUES (0005, 'image', 'about', 'https://systweak1.vo.llnwd.net/content/wp/systweakblogsnew/uploads_new/2018/09/Twitter.png');
-INSERT INTO Media VALUES (0006, 'video', 'main', 'https://www.youtube.com/embed/L3h828EtWoA');
-INSERT INTO Media VALUES (0006, 'image', 'about', 'https://systweak1.vo.llnwd.net/content/wp/systweakblogsnew/uploads_new/2018/09/Twitter.png');
-INSERT INTO Media VALUES (0007, 'video', 'main', 'https://www.youtube.com/embed/L3h828EtWoA');
-INSERT INTO Media VALUES (0007, 'image', 'about', 'https://systweak1.vo.llnwd.net/content/wp/systweakblogsnew/uploads_new/2018/09/Twitter.png');
-INSERT INTO Media VALUES (0008, 'video', 'main', 'https://www.youtube.com/embed/L3h828EtWoA');
-INSERT INTO Media VALUES (0008, 'image', 'about', 'https://systweak1.vo.llnwd.net/content/wp/systweakblogsnew/uploads_new/2018/09/Twitter.png');
+/*INSERT INTO Media VALUES (201, 'ma', 'da', 'linka');*/
+INSERT INTO Media VALUES (201, 'video', 'main', 'https://www.youtube.com/embed/L3h828EtWoA');
+INSERT INTO Media VALUES (201, 'image', 'about', 'https://systweak1.vo.llnwd.net/content/wp/systweakblogsnew/uploads_new/2018/09/Twitter.png');
+INSERT INTO Media VALUES (202, 'video', 'main', 'https://www.youtube.com/embed/L3h828EtWoA');
+INSERT INTO Media VALUES (202, 'image', 'about', 'https://systweak1.vo.llnwd.net/content/wp/systweakblogsnew/uploads_new/2018/09/Twitter.png');
+INSERT INTO Media VALUES (203, 'video', 'main', 'https://www.youtube.com/embed/L3h828EtWoA');
+INSERT INTO Media VALUES (203, 'image', 'about', 'https://systweak1.vo.llnwd.net/content/wp/systweakblogsnew/uploads_new/2018/09/Twitter.png');
+INSERT INTO Media VALUES (204, 'video', 'main', 'https://www.youtube.com/embed/L3h828EtWoA');
+INSERT INTO Media VALUES (204, 'image', 'about', 'https://systweak1.vo.llnwd.net/content/wp/systweakblogsnew/uploads_new/2018/09/Twitter.png');
+INSERT INTO Media VALUES (205, 'video', 'main', 'https://www.youtube.com/embed/L3h828EtWoA');
+INSERT INTO Media VALUES (205, 'image', 'about', 'https://systweak1.vo.llnwd.net/content/wp/systweakblogsnew/uploads_new/2018/09/Twitter.png');
+INSERT INTO Media VALUES (206, 'video', 'main', 'https://www.youtube.com/embed/L3h828EtWoA');
+INSERT INTO Media VALUES (206, 'image', 'about', 'https://systweak1.vo.llnwd.net/content/wp/systweakblogsnew/uploads_new/2018/09/Twitter.png');
+INSERT INTO Media VALUES (207, 'video', 'main', 'https://www.youtube.com/embed/L3h828EtWoA');
+INSERT INTO Media VALUES (207, 'image', 'about', 'https://systweak1.vo.llnwd.net/content/wp/systweakblogsnew/uploads_new/2018/09/Twitter.png');
+INSERT INTO Media VALUES (208, 'video', 'main', 'https://www.youtube.com/embed/L3h828EtWoA');
+INSERT INTO Media VALUES (208, 'image', 'about', 'https://systweak1.vo.llnwd.net/content/wp/systweakblogsnew/uploads_new/2018/09/Twitter.png');
 
-INSERT INTO Shipping_info VALUES (0001, 'United Kingdom');
-INSERT INTO Shipping_info VALUES (0001, 'Japan');
-INSERT INTO Shipping_info VALUES (0002, 'France');
-INSERT INTO Shipping_info VALUES (0002, 'Singapore');
-INSERT INTO Shipping_info VALUES (0003, 'Germany');
-INSERT INTO Shipping_info VALUES (0004, 'United States');
-INSERT INTO Shipping_info VALUES (0005, 'Germany');
-INSERT INTO Shipping_info VALUES (0005, 'United Kingdom');
-INSERT INTO Shipping_info VALUES (0005, 'Netherlands');
-INSERT INTO Shipping_info VALUES (0005, 'France');
-INSERT INTO Shipping_info VALUES (0005, 'Japan');
-INSERT INTO Shipping_info VALUES (0006, 'Germany');
-INSERT INTO Shipping_info VALUES (0007, 'Singapore');
-/* 0008 is not present in project id
-INSERT INTO Shipping_info VALUES (0008, 'United Kingdom', CURRENT_TIMESTAMP);*/
+INSERT INTO Shipping_info VALUES (201, 'United Kingdom');
+INSERT INTO Shipping_info VALUES (201, 'Japan');
+INSERT INTO Shipping_info VALUES (202, 'France');
+INSERT INTO Shipping_info VALUES (202, 'Singapore');
+INSERT INTO Shipping_info VALUES (203, 'Germany');
+INSERT INTO Shipping_info VALUES (204, 'United States');
+INSERT INTO Shipping_info VALUES (205, 'Germany');
+INSERT INTO Shipping_info VALUES (205, 'United Kingdom');
+INSERT INTO Shipping_info VALUES (205, 'Netherlands');
+INSERT INTO Shipping_info VALUES (205, 'France');
+INSERT INTO Shipping_info VALUES (205, 'Japan');
+INSERT INTO Shipping_info VALUES (206, 'Germany');
+INSERT INTO Shipping_info VALUES (207, 'Singapore');
+/* 208 is not present in project id
+INSERT INTO Shipping_info VALUES (208, 'United Kingdom', CURRENT_TIMESTAMP);*/
 
-INSERT INTO Pledges VALUES (0001, 'HirakawaDaichi', 250, '2019-03-03 00:00:01');
-INSERT INTO Pledges VALUES (0001, 'MJ', 200, '2019-03-03 00:00:01');
-INSERT INTO Pledges VALUES (0001, 'SirStamfordRaffles', 750, '2019-03-03 00:00:01');
-INSERT INTO Pledges VALUES (0002, 'MarieAntoinette', 300, '2019-03-03 00:00:01');
-INSERT INTO Pledges VALUES (0003, 'JacobLeBeau', 200, '2019-03-03 00:00:01');
-INSERT INTO Pledges VALUES (0003, 'IvonnePreiss', 200, '2019-03-03 00:00:01');
-INSERT INTO Pledges VALUES (0004, 'HirakawaDaichi', 250,'2019-03-03 00:00:01');
-INSERT INTO Pledges VALUES (0005, 'MarissaYeo', 300, '2019-03-03 00:00:01');
-/*INSERT INTO Pledges VALUES (0006, 'AngelinaHöger', 300, '2019-03-03 00:00:01');*/
-INSERT INTO Pledges VALUES (0007, 'HirakawaDaichi', 250, '2019-03-03 00:00:01');
+INSERT INTO Pledges VALUES (201, 'HirakawaDaichi', 250, '2019-03-03 00:00:01');
+INSERT INTO Pledges VALUES (201, 'MJ', 200, '2019-03-03 00:00:01');
+INSERT INTO Pledges VALUES (201, 'SirStamfordRaffles', 750, '2019-03-03 00:00:01');
+INSERT INTO Pledges VALUES (202, 'MarieAntoinette', 300, '2019-03-03 00:00:01');
+INSERT INTO Pledges VALUES (203, 'JacobLeBeau', 200, '2019-03-03 00:00:01');
+INSERT INTO Pledges VALUES (203, 'IvonnePreiss', 200, '2019-03-03 00:00:01');
+INSERT INTO Pledges VALUES (204, 'HirakawaDaichi', 250,'2019-03-03 00:00:01');
+INSERT INTO Pledges VALUES (205, 'MarissaYeo', 300, '2019-03-03 00:00:01');
+/*INSERT INTO Pledges VALUES (206, 'AngelinaHöger', 300, '2019-03-03 00:00:01');*/
+INSERT INTO Pledges VALUES (207, 'HirakawaDaichi', 250, '2019-03-03 00:00:01');
 
-INSERT INTO Follows VALUES (0001, 'HirakawaDaichi');
-INSERT INTO Follows VALUES (0001, 'MJ');
-INSERT INTO Follows VALUES (0001, 'SirStamfordRaffles');
-INSERT INTO Follows VALUES (0002, 'JacobLeBeau');
-INSERT INTO Follows VALUES (0003, 'MarieAntoinette');
-INSERT INTO Follows VALUES (0004, 'HirakawaDaichi');
-INSERT INTO Follows VALUES (0005, 'MarissaYeo');
-/*INSERT INTO Follows VALUES (0006, 'AngelinaHöger');*/
-INSERT INTO Follows VALUES (0007, 'HirakawaDaichi');
-INSERT INTO Follows VALUES (0007, 'MJ');
+INSERT INTO Follows VALUES (201, 'HirakawaDaichi');
+INSERT INTO Follows VALUES (201, 'MJ');
+INSERT INTO Follows VALUES (201, 'SirStamfordRaffles');
+INSERT INTO Follows VALUES (202, 'JacobLeBeau');
+INSERT INTO Follows VALUES (203, 'MarieAntoinette');
+INSERT INTO Follows VALUES (204, 'HirakawaDaichi');
+INSERT INTO Follows VALUES (205, 'MarissaYeo');
+/*INSERT INTO Follows VALUES (206, 'AngelinaHöger');*/
+INSERT INTO Follows VALUES (207, 'HirakawaDaichi');
+INSERT INTO Follows VALUES (207, 'MJ');
 
-INSERT INTO Rates VALUES ('HirakawaDaichi', 0001, 4.0);
-INSERT INTO Rates VALUES ('HirakawaDaichi', 0004, 4.1);
-INSERT INTO Rates VALUES ('HirakawaDaichi', 0007, 4.3);
-INSERT INTO Rates VALUES ('MJ', 0001, 3.7);
-INSERT INTO Rates VALUES ('SirStamfordRaffles', 0001, 3.5);
-INSERT INTO Rates VALUES ('IvonnePreiss', 0003, 1.0);
-INSERT INTO Rates VALUES ('JacobLeBeau', 0003, 3.2);
-INSERT INTO Rates VALUES ('MarissaYeo', 0003, 1.2);
-INSERT INTO Rates VALUES ('MarissaYeo', 0005, 5.4);
-INSERT INTO Rates VALUES ('MarissaYeo', 0008, 5.0);
-/*INSERT INTO Rates VALUES ('AngelinaHöger', 0006, 3.9);*/
+INSERT INTO Rates VALUES ('HirakawaDaichi', 201, 4.0);
+INSERT INTO Rates VALUES ('HirakawaDaichi', 204, 4.1);
+INSERT INTO Rates VALUES ('HirakawaDaichi', 207, 4.3);
+INSERT INTO Rates VALUES ('MJ', 201, 3.7);
+INSERT INTO Rates VALUES ('SirStamfordRaffles', 201, 3.5);
+INSERT INTO Rates VALUES ('IvonnePreiss', 203, 1.0);
+INSERT INTO Rates VALUES ('JacobLeBeau', 203, 3.2);
+INSERT INTO Rates VALUES ('MarissaYeo', 203, 1.2);
+INSERT INTO Rates VALUES ('MarissaYeo', 205, 5.4);
+INSERT INTO Rates VALUES ('MarissaYeo', 208, 5.0);
+/*INSERT INTO Rates VALUES ('AngelinaHöger', 206, 3.9);*/
 
-INSERT INTO Tags VALUES ('Scientist', 0001, 'xxx');
-INSERT INTO Tags VALUES ('Scientist', 0001, 'yyy');
-INSERT INTO Tags VALUES ('SirStamfordRaffles', 0002, 'zzz');
-INSERT INTO Tags VALUES ('SirStamfordRaffles', 0003, 'aaa');
-INSERT INTO Tags VALUES ('SirStamfordRaffles', 0004, 'bbb');
-INSERT INTO Tags VALUES ('SirStamfordRaffles', 0005, 'ccc');
-INSERT INTO Tags VALUES ('SirStamfordRaffles', 0006, 'ddd');
-INSERT INTO Tags VALUES ('SirStamfordRaffles', 0007, 'eee');
-INSERT INTO Tags VALUES ('SirStamfordRaffles', 0008, 'fff');
--- Auto-generated SQL script #201911060307
-INSERT INTO tags (user_name,project_id,tag_name)
-    VALUES ('MarieAntoinette',1,'xxx');
-INSERT INTO tags (user_name,project_id,tag_name)
-    VALUES ('SirStamfordRaffles',1,'yyy');
-INSERT INTO tags (user_name,project_id,tag_name)
-    VALUES ('ONobunaga',2,'zzz');
-INSERT INTO public.tags (user_name,project_id,tag_name)
-    VALUES ('Scientist',3,'aaa');
-INSERT INTO tags (user_name,project_id,tag_name)
-    VALUES ('SirWinstonChurchhill',4,'bbb');
-INSERT INTO public.tags (user_name,project_id,tag_name)
-    VALUES ('FounderFather',5,'ccc');
-INSERT INTO tags (user_name, project_id, tag_name) VALUES('Scientist', 1, 'aaa');
-INSERT INTO tags (user_name, project_id, tag_name) VALUES('Scientist', 1, 'bbb');
-INSERT INTO tags (user_name, project_id, tag_name) VALUES('Scientist', 1, 'ccc');
-INSERT INTO tags (user_name, project_id, tag_name) VALUES('Scientist', 1, 'ddd');
+INSERT INTO Tags VALUES ('Scientist', 201, 'xxx');
+INSERT INTO Tags VALUES ('Scientist', 201, 'yyy');
+INSERT INTO Tags VALUES ('SirStamfordRaffles', 202, 'zzz');
+INSERT INTO Tags VALUES ('SirStamfordRaffles', 203, 'aaa');
+INSERT INTO Tags VALUES ('SirStamfordRaffles', 204, 'bbb');
+INSERT INTO Tags VALUES ('SirStamfordRaffles', 205, 'ccc');
+INSERT INTO Tags VALUES ('SirStamfordRaffles', 206, 'ddd');
+INSERT INTO Tags VALUES ('SirStamfordRaffles', 207, 'eee');
+INSERT INTO Tags VALUES ('SirStamfordRaffles', 208, 'fff');
